@@ -12,6 +12,7 @@ fd-find
 fuse-libs
 fzf
 gcolor3
+gdu
 git
 gnome-extensions-app
 gnome-tweaks
@@ -24,7 +25,6 @@ libreoffice-impress
 libreoffice-writer
 mutter-devel
 mutter-devkit
-ncdu
 python3-virtualenv
 qbittorrent
 ripgrep
