@@ -12,9 +12,9 @@
   },
   "matugenTargetMonitor": "eDP-1",
   "popupTransparency": 0.75,
-  "floatingWindowSyncGlobal": false,
-  "floatingWindowTransparency": 0.9,
-  "floatingWindowForegroundTransparency": 0.5,
+  "floatingWindowSyncGlobal": true,
+  "floatingWindowTransparency": 0.75,
+  "floatingWindowForegroundTransparency": 0.75,
   "widgetBackgroundColor": "sth",
   "niriLayoutGapsOverride": 1,
   "niriLayoutBorderSize": 1,
@@ -24,7 +24,7 @@
   "keyboardNumlock": true,
   "barElevationEnabled": false,
   "blurEnabled": true,
-  "foregroundLayerTransparency": 0.5,
+  "foregroundLayerTransparency": 0.75,
   "controlCenterWidgets": [
     {
       "id": "user",
@@ -1133,5 +1133,8 @@
   "enableRippleEffects": true,
   "batteryChargeLimit": 80,
   "acProfileName": "2",
-  "desktopContextMenu": "off"
+  "desktopContextMenu": "off",
+  "blurLayerOutlineOpacity": 0,
+  "blurForegroundLayers": true,
+  "blurStrength": 0
 }
