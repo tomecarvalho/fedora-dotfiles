@@ -1,7 +1,7 @@
 {
   "id": "kanagawa",
   "name": "Kanagawa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "rebelot (kanagawa.nvim palette)",
   "description": "Colors inspired by Hokusai's The Great Wave off Kanagawa",
   "dark": {},
@@ -9,24 +9,32 @@
   "variants": {
     "type": "multi",
     "defaults": {
-      "dark": { "flavor": "wave", "accent": "blue" },
-      "light": { "flavor": "lotus", "accent": "blue" }
+      "dark": {
+        "flavor": "wave",
+        "accent": "blue"
+      },
+      "light": {
+        "flavor": "lotus",
+        "accent": "blue"
+      }
     },
     "flavors": [
       {
         "id": "wave",
         "name": "Wave",
         "dark": {
-          "surface": "#2a2a37",
+          "surface": "#30303f",
           "surfaceText": "#dcd7ba",
           "surfaceVariant": "#1f1f28",
           "surfaceVariantText": "#c8c093",
           "background": "#1f1f28",
           "backgroundText": "#dcd7ba",
           "outline": "#727169",
-          "surfaceContainer": "#1f1f28",
-          "surfaceContainerHigh": "#1a1a22",
-          "surfaceContainerHighest": "#16161d",
+          "surfaceContainerLowest": "#1a1a22",
+          "surfaceContainerLow": "#1f1f28",
+          "surfaceContainer": "#2a2a37",
+          "surfaceContainerHigh": "#363646",
+          "surfaceContainerHighest": "#54546d",
           "error": "#e82424",
           "warning": "#ff9e3b",
           "info": "#7e9cd8"
@@ -36,16 +44,18 @@
         "id": "dragon",
         "name": "Dragon",
         "dark": {
-          "surface": "#282727",
+          "surface": "#31302f",
           "surfaceText": "#c5c9c5",
           "surfaceVariant": "#181616",
           "surfaceVariantText": "#a6a69c",
           "background": "#181616",
           "backgroundText": "#c5c9c5",
           "outline": "#625e5a",
-          "surfaceContainer": "#181616",
-          "surfaceContainerHigh": "#12120f",
-          "surfaceContainerHighest": "#0d0c0c",
+          "surfaceContainerLowest": "#12120f",
+          "surfaceContainerLow": "#181616",
+          "surfaceContainer": "#282727",
+          "surfaceContainerHigh": "#393836",
+          "surfaceContainerHighest": "#625e5a",
           "error": "#e82424",
           "warning": "#ff9e3b",
           "info": "#8ba4b0"
@@ -55,16 +65,18 @@
         "id": "lotus",
         "name": "Lotus",
         "light": {
-          "surface": "#d5cea3",
+          "surface": "#e1d9ae",
           "surfaceText": "#545464",
           "surfaceVariant": "#f2ecbc",
           "surfaceVariantText": "#716e61",
           "background": "#f2ecbc",
           "backgroundText": "#545464",
           "outline": "#a09cac",
-          "surfaceContainer": "#f2ecbc",
-          "surfaceContainerHigh": "#e5ddb0",
-          "surfaceContainerHighest": "#dcd5ac",
+          "surfaceContainerLowest": "#f2ecbc",
+          "surfaceContainerLow": "#f2ecbc",
+          "surfaceContainer": "#e5ddb0",
+          "surfaceContainerHigh": "#dcd5ac",
+          "surfaceContainerHighest": "#d5cea3",
           "error": "#e82424",
           "warning": "#e98a00",
           "info": "#4d699b"

@@ -12,9 +12,9 @@
   },
   "matugenTargetMonitor": "eDP-1",
   "popupTransparency": 0.75,
-  "floatingWindowSyncGlobal": false,
-  "floatingWindowTransparency": 0.9,
-  "floatingWindowForegroundTransparency": 0.5,
+  "floatingWindowSyncGlobal": true,
+  "floatingWindowTransparency": 0.75,
+  "floatingWindowForegroundTransparency": 0.75,
   "widgetBackgroundColor": "sth",
   "niriLayoutGapsOverride": 1,
   "niriLayoutBorderSize": 1,
@@ -24,7 +24,7 @@
   "keyboardNumlock": true,
   "barElevationEnabled": false,
   "blurEnabled": true,
-  "foregroundLayerTransparency": 0.5,
+  "foregroundLayerTransparency": 0.75,
   "controlCenterWidgets": [
     {
       "id": "user",
@@ -723,7 +723,19 @@
       "allowWithoutTrigger": true
     },
     "dms_settings_search": {
+      "allowWithoutTrigger": false
+    },
+    "dms_clipboard_search": {
+      "allowWithoutTrigger": false
+    },
+    "emojiLauncher": {
+      "allowWithoutTrigger": false
+    },
+    "webSearch": {
       "allowWithoutTrigger": true
+    },
+    "niriWindows": {
+      "allowWithoutTrigger": false
     }
   },
   "launcherPluginOrder": [
@@ -731,6 +743,7 @@
     "dms_qr_generator",
     "dms_settings_search",
     "dms_clipboard_search",
+    "dms_vpn",
     "calculator",
     "emojiLauncher",
     "webSearch",
@@ -1119,5 +1132,9 @@
   "springBounce": 1,
   "enableRippleEffects": true,
   "batteryChargeLimit": 80,
-  "acProfileName": "2"
+  "acProfileName": "2",
+  "desktopContextMenu": "off",
+  "blurLayerOutlineOpacity": 0,
+  "blurForegroundLayers": true,
+  "blurStrength": 0
 }
