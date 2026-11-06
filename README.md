@@ -1,6 +1,11 @@
-# fedora-workstation
+# fedora-dotfiles
 
-Configuration and post-install scripts for [Fedora Workstation](https://fedoraproject.org/workstation/) (GNOME Desktop Environment). Initial version: 43.
+Fedora Linux dotfiles and post-install scripts, to be applied following a minimal installation via the [Fedora Everything](https://fedoraproject.org/misc/#everything) installer.
+
+- Window manager: [Niri](https://github.com/niri-wm/niri)
+- Shell: [Dux Modular Shell](https://duxlabs.dev/)
+
+Initial Fedora version: 45.
 
 ## Aliases
 
@@ -10,12 +15,11 @@ Public aliases reside in [aliases/.aliases](aliases/.aliases) and are meant to b
 
 Package lists contain system packages (DNF), Flatpaks and Snaps.
 
-| Package List                           | Description                                                    |
-| -------------------------------------- | -------------------------------------------------------------- |
-| [packages/general/](packages/general/) | General packages to install on any Fedora Workstation machine. |
-| [packages/work/](packages/work/)       | Packages that are only necessary for work.                     |
-| [packages/remove/](packages/remove/)   | Bloat to remove from a standard installation.                  |
-| [packages/niri/](packages/niri/)       | Niri and DankMaterialShell package profile.                    |
+| Package List                           | Description                                        |
+| -------------------------------------- | -------------------------------------------------- |
+| [packages/general/](packages/general/) | Packages installed on the minimal Niri/DMS system. |
+| [packages/work/](packages/work/)       | Packages that are only necessary for work.         |
+| [packages/remove/](packages/remove/)   | Unnecessary packages to remove if present.         |
 
 ## Scripts
 
@@ -27,8 +31,6 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [backup-home](scripts/backup/backup-home.sh)                 | Backup select directories and files from the home directory.                                   |
 | [backup-projects](scripts/backup/backup-projects.sh)         | Backup a project directory, excluding package manager caches and dependencies.                 |
 | [sync-local](scripts/backup/sync-local.sh)                   | Sync the same home/project paths to another local-network machine over SSH (sender wins).      |
-| [dconf-pull](scripts/dconf/pull.sh)                          | Export current GNOME dconf settings to repository.                                             |
-| [dconf-push](scripts/dconf/push.sh)                          | Restore GNOME dconf settings from repository.                                                  |
 | [default-boot-windows](scripts/grub/default-boot-windows.sh) | Sets Windows Boot Manager as the default GRUB entry when detected.                             |
 | [nvidia-drivers](scripts/nvidia-drivers.sh)                  | Helps set up NVIDIA GPU drivers.                                                               |
 | [secure-boot-key](scripts/secure-boot-key.sh)                | Helps with Secure Boot key setup.                                                              |
@@ -38,36 +40,6 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [core](scripts/utils/core.sh)                                | Core utility helpers shared by shell scripts.                                                  |
 | [git](scripts/utils/git.sh)                                  | Git-specific utility helpers shared by shell scripts.                                          |
 | [packages](scripts/utils/packages.sh)                        | Package list utility helpers.                                                                  |
-
-## Niri and DankMaterialShell
-
-The optional Niri profile enables the `avengemedia/dms` COPR, installs Niri,
-DMS, and its supported integrations, generates an initial Niri configuration,
-and attaches DMS to the Niri user service. It is not included in the normal
-GNOME installation:
-
-```bash
-./scripts/install.sh -s "niri_dms"
-```
-
-The profile uses `systemctl --user add-wants niri.service dms` instead of
-globally enabling DMS, so DMS starts only in Niri sessions and not in GNOME.
-
-Arguments after the selected step are forwarded to that step. Use `--` when a
-forwarded argument has the same name as an installer option:
-
-```bash
-./scripts/install.sh -s "stow_apply" -n
-./scripts/install.sh -s "stow_apply" -- --simulate
-```
-
-By default, Stow refuses to replace existing unmanaged files. To preview or
-adopt existing files into the repository, pass `--adopt` explicitly:
-
-```bash
-./scripts/install.sh -s "stow_apply" -- --adopt --simulate
-./scripts/install.sh -s "stow_apply" -- --adopt
-```
 
 ### DMS Matugen
 

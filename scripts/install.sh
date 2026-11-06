@@ -21,7 +21,6 @@ ALL_STEPS=(
   rpm_fusion
   repos
   copr
-  niri_dms
   dnf_install
   dnf_uninstall
   flatpak_install
@@ -29,7 +28,6 @@ ALL_STEPS=(
   codecs
   ca_bundle_symlink
   us_pt_keyboard_layout
-  gnome_extensions
   vscode
   zed
   node
@@ -43,6 +41,7 @@ ALL_STEPS=(
   set_fonts_ibm_plex
   jellyfin
   stow_apply
+  niri_dms
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -50,9 +49,7 @@ ALIASES_DIR="$SCRIPT_DIR/../aliases"
 PKGS_DIR="$SCRIPT_DIR/../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
 REMOVE_PKGS_DIR="$PKGS_DIR/remove"
-NIRI_PKGS_DIR="$PKGS_DIR/niri"
 STOW_DIR="$SCRIPT_DIR/../stow"
-EXTENSIONS_FILE="$SCRIPT_DIR/../gnome/extensions/extensions.txt"
 
 # shellcheck source=utils/packages.sh
 source "$SCRIPT_DIR/utils/packages.sh"
@@ -186,32 +183,10 @@ snap_install() {
 
 niri_dms() {
   local prefix="[niri_dms]"
-  local copr_file="$NIRI_PKGS_DIR/copr.txt"
-  local pkg_file="$NIRI_PKGS_DIR/dnf.txt"
-  local repositories=($(util_read_package_list "$copr_file"))
-  local packages=($(util_read_package_list "$pkg_file"))
-
-  echo "$prefix Enable DMS COPR repositories"
-  for repository in "${repositories[@]}"; do
-    sudo dnf copr enable -y "$repository"
-  done
-
-  echo "$prefix Install Niri, DankMaterialShell, and DMS integrations"
-  sudo dnf in -y "${packages[@]}"
-
-  if [[ ! -f "$HOME/.config/niri/config.kdl" ]]; then
-    echo "$prefix Generate the initial Niri configuration with DMS"
-    dms setup
-  else
-    echo "$prefix Existing Niri configuration found; skipping dms setup"
-  fi
 
   echo "$prefix Attach DMS to the Niri user service"
-  systemctl --user add-wants niri.service dms
-
-  echo "$prefix Attach KDE Connect daemon to the Niri user service"
   systemctl --user daemon-reload
-  systemctl --user add-wants niri.service kdeconnectd.service
+  systemctl --user add-wants niri.service dms
 }
 
 codecs() {
@@ -263,51 +238,6 @@ ca_bundle_symlink() {
   sudo ln -s "$source" "$target"
 
   echo "$prefix Created symlink from $source to $target"
-}
-
-gnome_extensions() {
-  echo "[gnome_extensions] Open GNOME extension URLs listed in gnome/extensions/extensions.txt"
-
-  if [[ ! -f "$EXTENSIONS_FILE" ]]; then
-    echo "[gnome_extensions] Missing $EXTENSIONS_FILE"
-    return 1
-  fi
-
-  local confirm=""
-  local -a urls=($(util_read_package_list "$EXTENSIONS_FILE"))
-
-  if [[ ${#urls[@]} -eq 0 ]]; then
-    echo "[gnome_extensions] No extension URLs to open"
-    return
-  fi
-
-  echo "[gnome_extensions] Found ${#urls[@]} extension URLs."
-  echo "[gnome_extensions] Enable/install each extension from the opened pages."
-
-  for url in "${urls[@]}"; do
-    echo "[gnome_extensions] ${url}"
-  done
-
-  if command -v xdg-open &>/dev/null; then
-    read -r -p "[gnome_extensions] Open all extension pages now? [y/n] (default: y): " confirm
-    confirm="${confirm:-y}"
-
-    case "$confirm" in
-    y | Y)
-      for url in "${urls[@]}"; do
-        xdg-open "$url" >/dev/null 2>&1 || echo "[gnome_extensions] Failed to open $url"
-      done
-      ;;
-    n | N)
-      echo "[gnome_extensions] Skipped opening browser pages."
-      ;;
-    *)
-      echo "[gnome_extensions] Invalid response '$confirm'. Skipping browser open."
-      ;;
-    esac
-  else
-    echo "[gnome_extensions] xdg-open not found. Open the links above manually."
-  fi
 }
 
 vscode() {

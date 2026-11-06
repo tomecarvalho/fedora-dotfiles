@@ -1,8 +1,4 @@
 {
-  "dankKDEConnect": {
-    "enabled": true,
-    "selectedDeviceId": "e51e7786b4ae4e82aaa8952ea8d7edc9"
-  },
   "calculator": {
     "enabled": true,
     "trigger": "",

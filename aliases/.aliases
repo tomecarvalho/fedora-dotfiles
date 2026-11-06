@@ -9,9 +9,6 @@ BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 # Copy text to the clipboard (Wayland).
 alias cb="wl-copy"
 
-# Start a nested GNOME Shell instance for extension development.
-alias gsdw="dbus-run-session gnome-shell --devkit --wayland"
-
 # Keep awake shorthand.
 alias ka="keep_awake"
 
@@ -27,16 +24,6 @@ alias kssh="kitten ssh"
 # Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
 update() {
   "$SCRIPTS_PATH/update.sh" "$@"
-}
-
-# Update versioned dconf config.
-dconf_pull() {
-  "$SCRIPTS_PATH/dconf/pull.sh"
-}
-
-# Commit and push changes to tracked dconf config.
-dconf_push() {
-  "$SCRIPTS_PATH/dconf/push.sh"
 }
 
 # Enables the cursor command to open files or directories through the terminal.

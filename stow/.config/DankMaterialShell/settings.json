@@ -72,12 +72,6 @@
       "h": 1
     },
     {
-      "id": "plugin_dankKDEConnect",
-      "enabled": true,
-      "w": 4,
-      "h": 1
-    },
-    {
       "id": "audioOutput",
       "enabled": true,
       "w": 4,
@@ -211,9 +205,7 @@
   ],
   "powerMenuDefaultAction": "poweroff",
   "screenPreferences": {
-    "notepad": [
-      "all"
-    ],
+    "notepad": ["all"],
     "notifications": [
       {
         "name": "eDP-1",

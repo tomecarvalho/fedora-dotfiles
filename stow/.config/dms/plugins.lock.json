@@ -5,11 +5,6 @@
       "repo": "https://github.com/rochacbruno/DankCalculator",
       "commit": "c9fbbe921e9afeb92f4e92390e9fc05f006f0373"
     },
-    "dankKDEConnect": {
-      "repo": "https://github.com/AvengeMedia/dms-plugins",
-      "path": "DankKDEConnect",
-      "commit": "e774a9756f2a50499c37a5513f28bee4ebe81d73"
-    },
     "emojiLauncher": {
       "repo": "https://github.com/devnullvoid/dms-emoji-launcher",
       "commit": "8ff394e3ddfcb2fd755ed2e7b4c6f01f3e26e596"
