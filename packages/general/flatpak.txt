@@ -1,7 +1,6 @@
 com.bitwarden.desktop
 com.obsproject.Studio
 com.stremio.Stremio
-it.mijorus.gearlever
 md.obsidian.Obsidian
 org.localsend.localsend_app
 org.signal.Signal

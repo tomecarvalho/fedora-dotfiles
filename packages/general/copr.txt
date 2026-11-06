@@ -1,5 +1,4 @@
-avengemedia/dms
 dejan/lazygit
-dgop
-dux-files
+duxlabs/dms
+duxlabs/dux-repo
 lihaohong/yazi
