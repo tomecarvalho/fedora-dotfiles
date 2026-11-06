@@ -42,6 +42,7 @@ ALL_STEPS=(
   jellyfin
   stow_apply
   niri_dms
+  dms_greeter
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -187,6 +188,21 @@ niri_dms() {
   echo "$prefix Attach DMS to the Niri user service"
   systemctl --user daemon-reload
   systemctl --user add-wants niri.service dms
+
+  echo "$prefix Enable and start the Dsearch user indexer"
+  systemctl --user enable --now dsearch.service
+}
+
+dms_greeter() {
+  local prefix="[dms_greeter]"
+
+  if ! command -v dms-greeter >/dev/null 2>&1; then
+    echo "$prefix dms-greeter is not installed" >&2
+    return 1
+  fi
+
+  echo "$prefix Install and enable DMS Greeter"
+  dms-greeter install --yes
 }
 
 codecs() {

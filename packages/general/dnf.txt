@@ -11,6 +11,7 @@ ddcutil
 dgop
 discord
 dms
+dux-greeter
 dsearch
 dux-files
 fastfetch
@@ -24,6 +25,7 @@ gnome-keyring-pam
 i2c-tools
 ibm-plex-sans-fonts
 jellyfin
+kitty
 lazygit
 libgda 
 libgda-sqlite
@@ -46,6 +48,7 @@ snapd
 snapper
 stow
 thunderbird
+wl-clipboard
 tmux
 xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk

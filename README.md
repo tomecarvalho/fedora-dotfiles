@@ -40,9 +40,3 @@ Package lists contain system packages (DNF), Flatpaks and Snaps.
 | [core](scripts/utils/core.sh)                                | Core utility helpers shared by shell scripts.                                                  |
 | [git](scripts/utils/git.sh)                                  | Git-specific utility helpers shared by shell scripts.                                          |
 | [packages](scripts/utils/packages.sh)                        | Package list utility helpers.                                                                  |
-
-### DMS Matugen
-
-DMS includes Matugen Template toggles in **Settings > Personalization > Theme & Colors**.
-
-After installing a supported app, it might be necessary to switch theme and then switch back to make it generate the theme for the app. For example, after installing Kitty, to get `dank-tabs.conf` and `dank-theme.conf` to appear in `~/.config/kitty`.
