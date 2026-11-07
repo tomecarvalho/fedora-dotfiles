@@ -162,33 +162,29 @@ flatpak_install() {
 }
 
 snap_install() {
-  echo "[snap_install] Install Snap packages"
+  local prefix="[snap_install]"
+
+  echo "$prefix Install Snap packages"
 
   local pkg_file="$GENERAL_PKGS_DIR/snap.txt"
   local packages=($(util_read_package_list "$pkg_file"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
-    echo "[snap_install] No packages to install"
+    echo "$prefix No packages to install"
     return
   fi
 
-  echo "[snap_install] Enabling snapd service..."
+  echo "$prefix Enabling snapd service..."
   sudo systemctl enable --now snapd.socket
   sudo ln -sf /var/lib/snapd/snap /snap 2>/dev/null || true
 
-  echo "[snap_install] Waiting for snapd socket to become ready..."
-  local retries=50
-  until systemctl is-active --quiet snapd.socket; do
-    if [[ $retries -le 0 ]]; then
-      echo "[snap_install] snapd.socket did not become ready in time" >&2
-      return 1
-    fi
+  echo "$prefix Waiting for snapd to finish seeding..."
+  if ! timeout 600 sudo snap wait system seed.loaded; then
+    echo "$prefix snapd did not finish seeding in time" >&2
+    return 1
+  fi
 
-    sleep 0.1
-    ((retries--))
-  done
-
-  echo "[snap_install] Installing ${#packages[@]} package(s) with snap..."
+  echo "$prefix Installing ${#packages[@]} package(s) with snap..."
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
