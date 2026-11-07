@@ -16,6 +16,7 @@ dux-files
 dux-greeter
 fastfetch
 fd-find
+firefox
 flatpak
 fuse-libs
 fzf
