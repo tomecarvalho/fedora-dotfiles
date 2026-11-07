@@ -3,6 +3,7 @@ accountsservice
 adw-gtk3-theme
 alsa-sof-firmware
 alsa-utils
+bat
 bluez
 bluez-tools
 brave-origin
