@@ -117,17 +117,22 @@ dnf_install() {
 }
 
 flatpak_install() {
-  echo "[flatpak_install] Install Flatpak packages"
+  local prefix="[flatpak_install]"
+
+  echo "$prefix Enable Flathub"
+  flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+  echo "$prefix Installing Flatpak packages"
 
   local pkg_file="$GENERAL_PKGS_DIR/flatpak.txt"
   local packages=($(util_read_package_list "$pkg_file"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
-    echo "[flatpak_install] No packages to install"
+    echo "$prefix No packages to install"
     return
   fi
 
-  echo "[flatpak_install] Installing ${#packages[@]} package(s) with flatpak..."
+  echo "$prefix Installing ${#packages[@]} package(s) with flatpak..."
   for package in "${packages[@]}"; do
     flatpak install -y flathub "$package"
   done
