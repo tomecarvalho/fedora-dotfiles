@@ -25,6 +25,7 @@ ALL_STEPS=(
   codecs
   flatpak_install
   snap_install
+  system_services
   ca_bundle_symlink
   us_pt_keyboard_layout
   oh_my_zsh
@@ -187,6 +188,20 @@ snap_install() {
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
+}
+
+system_services() {
+  local prefix="[system_services]"
+
+  echo "$prefix Enable system services"
+
+  sudo systemctl enable --now NetworkManager
+  sudo systemctl enable --now bluetooth
+
+  systemctl --user enable --now \
+    pipewire.socket \
+    pipewire-pulse.socket \
+    wireplumber.service
 }
 
 niri_dms() {
