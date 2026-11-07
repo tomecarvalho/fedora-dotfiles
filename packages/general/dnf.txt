@@ -64,6 +64,7 @@ snapper
 stow
 thunderbird
 tmux
+trash-cli
 wireplumber
 wl-clipboard
 wpa_supplicant
