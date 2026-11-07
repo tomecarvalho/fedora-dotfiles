@@ -16,6 +16,7 @@ dux-files
 dux-greeter
 fastfetch
 fd-find
+flatpak
 fuse-libs
 fzf
 gdu
