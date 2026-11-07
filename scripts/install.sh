@@ -27,12 +27,9 @@ ALL_STEPS=(
   snap_install
   ca_bundle_symlink
   us_pt_keyboard_layout
-  vscode
-  zed
-  node
   oh_my_zsh
   oh_my_zsh_plugins
-  starship
+  starship_install
   docker
   snapper
   aliases
@@ -42,6 +39,9 @@ ALL_STEPS=(
   stow_apply
   niri_dms
   dms_greeter
+  vscode
+  zed
+  node
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -286,13 +286,14 @@ oh_my_zsh_plugins() {
   git clone https://github.com/zsh-users/zsh-autosuggestions "$plugins/zsh-autosuggestions"
 }
 
-starship() {
+starship_install() {
   local prefix="[starship]"
-
   echo "$prefix Install starship prompt"
 
-  if ! command -v starship &>/dev/null; then
-    echo "$prefix Run the following command: curl -sS https://starship.rs/install.sh | sh"
+  if command -v starship &>/dev/null; then
+    echo "$prefix starship is already installed at $(command -v starship)"
+  else
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
   fi
 }
 
