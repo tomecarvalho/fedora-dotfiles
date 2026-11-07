@@ -11,9 +11,9 @@ ddcutil
 dgop
 discord
 dms
-dux-greeter
 dsearch
 dux-files
+dux-greeter
 fastfetch
 fd-find
 fuse-libs
@@ -35,12 +35,11 @@ libreoffice-writer
 matugen
 neovim
 niri
-polkit-gnome
 python3-neovim
 python3-virtualenv
 qbittorrent
 qt5ct
-qt6-multimedia
+qt6-qtmultimedia
 qt6ct
 ripgrep
 seahorse
@@ -48,8 +47,8 @@ snapd
 snapper
 stow
 thunderbird
-wl-clipboard
 tmux
+wl-clipboard
 xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
 xwayland-satellite
