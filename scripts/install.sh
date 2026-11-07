@@ -207,9 +207,9 @@ dms_greeter() {
     echo "$prefix dms-greeter is not installed" >&2
     return 1
   fi
-
+  
   echo "$prefix Install and enable DMS Greeter"
-  dms-greeter install --yes
+  DMS_PRIVESC=sudo dms-greeter install --yes
 }
 
 # Symlink the system CA bundle to the location expected by some tools, if not already set up.
