@@ -30,7 +30,6 @@ ALL_STEPS=(
   oh_my_zsh
   oh_my_zsh_plugins
   starship_install
-  docker
   snapper
   aliases
   blex_mono_nerd_font
@@ -354,24 +353,6 @@ us_pt_keyboard_layout() {
     echo "[us_pt_keyboard_layout] Install script not found at $install_script"
     return 1
   fi
-}
-
-docker() {
-  echo "[docker] Install Docker Engine, configure user permissions and set up socket"
-
-  # Install Docker engine
-  sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
-  sudo dnf in -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-  # Start Docker service
-  sudo systemctl start docker
-
-  # Allow user to run Docker without sudo
-  sudo groupadd docker
-  sudo usermod -aG docker "$USER"
-
-  # Set up socket
-  sudo systemctl enable --now docker.socket
 }
 
 snapper() {

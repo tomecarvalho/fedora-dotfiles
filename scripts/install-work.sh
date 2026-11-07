@@ -9,8 +9,9 @@ ALL_STEPS=(
   copr
   dnf_install
   snap_install
-  cursor
-  chrome
+  docker_install
+  cursor_install
+  chrome_install
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -43,24 +44,48 @@ dnf_install() {
 }
 
 snap_install() {
-  echo "[snap_install] Install Snap packages"
+  local prefix="[snap_install]"
+
+  echo "$prefix Install Snap packages"
   PKG_FILE="$PKGS_DIR/snap.txt"
 
   local packages=($(util_read_package_list "$PKG_FILE"))
 
   if [[ ${#packages[@]} -eq 0 ]]; then
-    echo "[snap_install] No packages to install"
+    echo "$prefix No packages to install"
     return
   fi
 
-  echo "[snap_install] Installing ${#packages[@]} packages with snap..."
+  echo "$prefix Installing ${#packages[@]} packages with snap..."
   for package in "${packages[@]}"; do
     sudo snap install "$package"
   done
 }
 
-cursor() {
-  echo "[cursor] Add Cursor repository"
+docker_install() {
+  local prefix="[docker_install]"
+
+  echo "$prefix Install Docker Engine, configure user permissions and set up socket"
+
+  # Install Docker engine
+  sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+  sudo dnf in -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+  # Start Docker service
+  sudo systemctl start docker
+
+  # Allow user to run Docker without sudo
+  sudo groupadd docker
+  sudo usermod -aG docker "$USER"
+
+  # Set up socket
+  sudo systemctl enable --now docker.socket
+}
+
+cursor_install() {
+  local prefix="[cursor_install]"
+
+  echo "$prefix Add Cursor repository"
   sudo tee /etc/yum.repos.d/cursor.repo << 'EOF'
 [cursor]
 name=Cursor
@@ -70,12 +95,14 @@ gpgcheck=1
 gpgkey=https://downloads.cursor.com/keys/anysphere.asc
 EOF
 
-  echo "[cursor] Install Cursor"
+  echo "$prefix Install Cursor"
   sudo dnf in -y cursor
 }
 
-chrome() {
-  echo "[chrome] Enable Chrome repository and install it"
+chrome_install() {
+  local prefix="[chrome_install]"
+
+  echo "$prefix Enable Chrome repository and install it"
   sudo dnf config-manager setopt google-chrome.enabled=1
   sudo dnf in -y google-chrome-stable
 }
