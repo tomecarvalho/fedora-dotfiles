@@ -38,9 +38,9 @@ ALL_STEPS=(
   stow_apply
   niri_dms
   dms_greeter
-  vscode
-  zed
-  node
+  vscode_install
+  zed_install
+  node_install
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -207,7 +207,7 @@ dms_greeter() {
     echo "$prefix dms-greeter is not installed" >&2
     return 1
   fi
-  
+
   echo "$prefix Install and enable DMS Greeter"
   DMS_PRIVESC=sudo dms-greeter install --yes
 }
@@ -238,21 +238,23 @@ ca_bundle_symlink() {
   echo "$prefix Created symlink from $source to $target"
 }
 
-vscode() {
+vscode_install() {
+  local prefix="[vscode_install]"
+
   if command -v code &>/dev/null; then
-    echo "[vscode] VS Code is already installed"
+    echo "$prefix VS Code is already installed"
     return
   fi
 
-  echo "[vscode] Add VS Code repository and install Code"
+  echo "$prefix Add VS Code repository and install Code"
   sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
   echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
-  echo "[vscode] Install VS Code"
+  echo "$prefix Install VS Code"
   sudo dnf in -y code
 }
 
-zed() {
-  local prefix="[zed]"
+zed_install() {
+  local prefix="[zed_install]"
 
   if command -v zed &>/dev/null; then
     echo "$prefix Zed is already installed"
@@ -296,15 +298,17 @@ starship_install() {
   fi
 }
 
-node() {
-  echo "[node] Removing Node packages and installing NVM, PNPM"
+node_install() {
+  local prefix="[node_install]"
+
+  echo "$prefix Removing Node packages and installing NVM, PNPM"
   sudo dnf remove -y nodejs nodejs-docs nodejs-full-i18n nodejs-npm
 
   # Install NVM if not already installed in ~/.nvm
   if [[ -d "$HOME/.nvm" ]]; then
-    echo "[node] NVM is already installed"
+    echo "$prefix NVM is already installed"
   else
-    echo "[node] Installing NVM"
+    echo "$prefix Installing NVM"
     curl -o- "$NVM_INSTALL_URL" | bash
   fi
 
@@ -312,17 +316,17 @@ node() {
   local nvm_dir="$HOME/.nvm"
   [ -s "$nvm_dir/nvm.sh" ] && \. "$nvm_dir/nvm.sh"
 
-  echo "[node] Installing latest LTS version of Node via NVM"
+  echo "$prefix Installing latest LTS version of Node via NVM"
   nvm install --lts
 
-  echo "[node] Setting LTS as default Node version"
+  echo "$prefix Setting LTS as default Node version"
   nvm use --lts
   nvm alias default node
 
-  echo "[node] Installing PNPM globally via NPM"
+  echo "$prefix Installing PNPM globally via NPM"
   npm install -g pnpm
 
-  echo "[node] Set up PNPM global packages directory"
+  echo "$prefix Set up PNPM global packages directory"
   pnpm setup
 }
 
