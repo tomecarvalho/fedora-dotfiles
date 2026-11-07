@@ -128,7 +128,8 @@ codecs() {
   sudo dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
   echo "$prefix Install packages for DVD"
-  sudo dnf install -y rpmfusion-free-release-tainted libdvdcss
+  sudo dnf install -y rpmfusion-free-release-tainted
+  sudo dnf --repo=rpmfusion-free-tainted install -y libdvdcss
 
   echo "$prefix Install various firmwares from nonfree tainted"
   sudo dnf install -y rpmfusion-nonfree-release-tainted
