@@ -84,3 +84,8 @@ vault_setup() {
 vault_push() {
   "$SCRIPTS_PATH/obsidian/vault-push.sh" "$@"
 }
+
+# Automatically set the timezone based on the public IP address
+set_timezone() {
+  "$SCRIPTS_PATH/datetime/set-timezone.sh" "$@"
+}
