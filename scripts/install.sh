@@ -22,9 +22,9 @@ ALL_STEPS=(
   repos
   copr
   dnf_install
+  codecs
   flatpak_install
   snap_install
-  codecs
   ca_bundle_symlink
   us_pt_keyboard_layout
   vscode
@@ -116,6 +116,28 @@ dnf_install() {
   sudo dnf in -y --allowerasing "${packages[@]}"
 }
 
+codecs() {
+  # https://rpmfusion.org/Howto/Multimedia
+
+  local prefix="[codecs]"
+
+  echo "$prefix Switch to full ffmpeg"
+  sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
+
+  echo "$prefix Install additional codecs"
+  sudo dnf group install -y multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
+
+  echo "$prefix Install packages for DVD"
+  sudo dnf install -y rpmfusion-free-release-tainted libdvdcss
+
+  echo "$prefix Install various firmwares from nonfree tainted"
+  sudo dnf install -y rpmfusion-nonfree-release-tainted
+  sudo dnf --repo=rpmfusion-nonfree-tainted install -y "*-firmware"
+
+  echo "$prefix Delete GStreamer registry cache to fix H265/E-AC-3 playback"
+  rm -f ~/.cache/gstreamer-1.0/registry.x86_64.bin
+}
+
 flatpak_install() {
   local prefix="[flatpak_install]"
 
@@ -192,31 +214,6 @@ dms_greeter() {
 
   echo "$prefix Install and enable DMS Greeter"
   dms-greeter install --yes
-}
-
-codecs() {
-  # https://rpmfusion.org/Howto/Multimedia
-
-  local prefix="[codecs]"
-
-  echo "$prefix Switch to full ffmpeg"
-  sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
-
-  echo "$prefix Install additional codecs"
-  sudo dnf up -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
-
-  echo "$prefix Install packages for DVD"
-  sudo dnf in -y rpmfusion-free-release-tainted
-  sudo dnf in -y libdvdcss
-
-  echo "$prefix Install various firmwares from nonfree tainted"
-  sudo dnf in -y rpmfusion-nonfree-release-tainted
-  sudo dnf --repo=rpmfusion-nonfree-tainted in -y "*-firmware"
-
-  # Fix H265/E-AC-3 unable to be played by deleting GStreamer cache.
-  # See: https://discussion.fedoraproject.org/t/how-to-play-h265-videos-and-e-ac-3-audio/146600/7
-  echo "$prefix Delete GStreamer registry cache to fix H265/E-AC-3 playback"
-  rm ~/.cache/gstreamer-1.0/registry.x86_64.bin
 }
 
 # Symlink the system CA bundle to the location expected by some tools, if not already set up.
