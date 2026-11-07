@@ -22,7 +22,6 @@ ALL_STEPS=(
   repos
   copr
   dnf_install
-  dnf_uninstall
   flatpak_install
   snap_install
   codecs
@@ -115,21 +114,6 @@ dnf_install() {
 
   echo "[dnf_install] Installing ${#packages[@]} package(s) with dnf..."
   sudo dnf in -y --allowerasing "${packages[@]}"
-}
-
-dnf_uninstall() {
-  echo "[dnf_uninstall] Uninstall unnecessary DNF packages"
-
-  local pkg_file="$REMOVE_PKGS_DIR/dnf.txt"
-  local packages=($(util_read_package_list "$pkg_file"))
-
-  if [[ ${#packages[@]} -eq 0 ]]; then
-    echo "[dnf_uninstall] No packages to uninstall"
-    return
-  fi
-
-  echo "[dnf_uninstall] Uninstalling ${#packages[@]} package(s) with dnf..."
-  sudo dnf rm -y "${packages[@]}"
 }
 
 flatpak_install() {
