@@ -33,6 +33,7 @@ ALL_STEPS=(
   stow_apply
   niri_dms
   dms_greeter
+  gcr_ssh_agent
   node_install
 )
 
@@ -224,6 +225,13 @@ dms_greeter() {
 
   echo "$prefix Install and enable DMS Greeter"
   DMS_PRIVESC=sudo dms-greeter install --yes
+}
+
+gcr_ssh_agent() {
+  local prefix="[gcr_ssh_agent]"
+
+  echo "$prefix Enable GCR SSH agent socket"
+  systemctl --user enable --now gcr-ssh-agent.socket
 }
 
 # Symlink the system CA bundle to the location expected by some tools, if not already set up.
