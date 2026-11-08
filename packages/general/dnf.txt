@@ -42,6 +42,7 @@ libreoffice-calc
 libreoffice-impress
 libreoffice-writer
 linux-firmware
+loupe
 matugen
 neovim
 NetworkManager
