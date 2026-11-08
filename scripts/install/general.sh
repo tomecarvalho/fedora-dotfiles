@@ -230,8 +230,8 @@ dms_greeter() {
 gcr_ssh_agent() {
   local prefix="[gcr_ssh_agent]"
 
-  echo "$prefix Enable GCR SSH agent socket"
-  systemctl --user enable --now gcr-ssh-agent.socket
+  echo "$prefix Enable GNOME Keyring and GCR SSH agent socket"
+  systemctl --user enable --now gnome-keyring-daemon.socket gcr-ssh-agent.socket
 }
 
 # Symlink the system CA bundle to the location expected by some tools, if not already set up.
