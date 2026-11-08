@@ -104,6 +104,7 @@ chrome_install() {
   local prefix="[chrome_install]"
 
   echo "$prefix Enable Chrome repository and install it"
+  sudo dnf config-manager addrepo --overwrite --from-repofile=https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome.repo
   sudo dnf config-manager setopt google-chrome.enabled=1
   sudo dnf in -y google-chrome-stable
 }
