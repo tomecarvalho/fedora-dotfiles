@@ -488,7 +488,7 @@ stow_apply() {
     echo "$prefix DRY RUN: no changes will be made"
   fi
 
-  echo "$prefix Symlink stow-managed dotfiles to home directory"
+  echo "$prefix Symlink stow-managed files into their target directories"
 
   local stow_bin
   stow_bin="$(type -P stow || true)"
@@ -521,13 +521,19 @@ stow_apply() {
 
   for package in "${packages[@]}"; do
     local package_target="$HOME"
+    local -a stow_command=("$stow_bin")
 
     if [[ "$package" == .* ]]; then
       package_target="$HOME/$package"
+    elif [[ "$package" == system ]]; then
+      package_target="/"
+      if ((!dry_run)); then
+        stow_command=(sudo "$stow_bin")
+      fi
     fi
 
-    echo "$prefix Stowing package: $package"
-    "$stow_bin" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package" ||
+    echo "$prefix Stowing package: $package (target: $package_target)"
+    "${stow_command[@]}" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package" ||
       {
         echo "$prefix Failed to stow package: $package" >&2
         failed=1
