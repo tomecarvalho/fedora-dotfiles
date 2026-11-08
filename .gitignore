@@ -1,1 +1,4 @@
 .vscode/
+
+# Device-specific monitor layout; keep it local and out of Stow installs.
+/stow/.config/dms/monitors.json
