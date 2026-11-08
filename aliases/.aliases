@@ -23,7 +23,7 @@ alias kssh="kitten ssh"
 
 # Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
 update() {
-  "$SCRIPTS_PATH/update.sh" "$@"
+  "$SCRIPTS_PATH/update/update.sh" "$@"
 }
 
 # Enables the cursor command to open files or directories through the terminal.
@@ -57,7 +57,7 @@ sync_local() {
 }
 
 keep_awake() {
-  "$SCRIPTS_PATH/keep-awake.sh" "$@"
+  "$SCRIPTS_PATH/keep-awake/keep-awake.sh" "$@"
 }
 
 # Copy files to the clipboard (Wayland).

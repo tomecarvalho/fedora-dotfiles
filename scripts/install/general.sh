@@ -6,13 +6,6 @@ US_PT_KEYBOARD_LAYOUT_GITHUB_SUFFIX="tomecarvalho/us-pt-keyboard-layout.git"
 
 BLEX_MONO_NERD_FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/IBMPlexMono.zip"
 
-VIDEOS_DIR="$HOME/Videos"
-SHOWS_DIR="$VIDEOS_DIR/shows"
-FILMS_DIR="$VIDEOS_DIR/films"
-JELLYFIN_MEDIA_DIR="/mnt/media"
-JELLYFIN_SHOWS_DIR="$JELLYFIN_MEDIA_DIR/shows"
-JELLYFIN_FILMS_DIR="$JELLYFIN_MEDIA_DIR/films"
-
 set -euo pipefail
 
 # Default, ordered list of descriptive step names
@@ -36,30 +29,27 @@ ALL_STEPS=(
   aliases
   blex_mono_nerd_font
   set_fonts_ibm_plex
-  jellyfin
   stow_apply
   niri_dms
   dms_greeter
-  vscode_install
-  zed_install
   node_install
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ALIASES_DIR="$SCRIPT_DIR/../aliases"
-PKGS_DIR="$SCRIPT_DIR/../packages"
+ALIASES_DIR="$SCRIPT_DIR/../../aliases"
+PKGS_DIR="$SCRIPT_DIR/../../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
-STOW_DIR="$SCRIPT_DIR/../stow"
+STOW_DIR="$SCRIPT_DIR/../../stow"
 
-# shellcheck source=utils/packages.sh
-source "$SCRIPT_DIR/utils/packages.sh"
-# shellcheck source=utils/core.sh
-source "$SCRIPT_DIR/utils/core.sh"
+# shellcheck source=../utils/packages.sh
+source "$SCRIPT_DIR/../utils/packages.sh"
+# shellcheck source=../utils/core.sh
+source "$SCRIPT_DIR/../utils/core.sh"
 
 set_hostname() {
   echo "[set_hostname] Set hostname based on devices.yaml"
 
-  if ! "$SCRIPT_DIR/hostname/set-hostname.sh"; then
+  if ! "$SCRIPT_DIR/../hostname/set-hostname.sh"; then
     echo "[set_hostname] Failed to set hostname" >&2
   fi
 }
@@ -259,35 +249,6 @@ ca_bundle_symlink() {
   sudo ln -s "$source" "$target"
 
   echo "$prefix Created symlink from $source to $target"
-}
-
-vscode_install() {
-  local prefix="[vscode_install]"
-
-  if command -v code &>/dev/null; then
-    echo "$prefix VS Code is already installed"
-    return
-  fi
-
-  echo "$prefix Add VS Code repository and install Code"
-  sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-  echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
-  echo "$prefix Install VS Code"
-  sudo dnf in -y code
-}
-
-zed_install() {
-  local prefix="[zed_install]"
-
-  if command -v zed &>/dev/null; then
-    echo "$prefix Zed is already installed"
-    return
-  fi
-
-  echo "$prefix Install Zed through its installation script"
-
-  # https://zed.dev/docs/installation
-  curl -fsSL https://zed.dev/install.sh | sh
 }
 
 oh_my_zsh() {
@@ -499,41 +460,6 @@ EOF
 }
 
 set_fonts_ibm_plex() { set_fonts ibm_plex; }
-
-jellyfin() {
-  echo "[jellyfin] Set up Jellyfin media server"
-
-  # Create user "shows" and "films" directories in Videos, if needed
-  mkdir -p "$SHOWS_DIR"
-  mkdir -p "$FILMS_DIR"
-
-  # Create directories for Jellyfin media
-  sudo mkdir -p "$JELLYFIN_SHOWS_DIR"
-  sudo mkdir -p "$JELLYFIN_FILMS_DIR"
-
-  # Ensure fstab entries exist (bind mounts)
-  FSTAB_LINE_SHOWS="$SHOWS_DIR $JELLYFIN_SHOWS_DIR none bind 0 0"
-  FSTAB_LINE_FILMS="$FILMS_DIR $JELLYFIN_FILMS_DIR none bind 0 0"
-
-  grep -qsF "$FSTAB_LINE_SHOWS" /etc/fstab ||
-    echo "$FSTAB_LINE_SHOWS" | sudo tee -a /etc/fstab
-
-  grep -qsF "$FSTAB_LINE_FILMS" /etc/fstab ||
-    echo "$FSTAB_LINE_FILMS" | sudo tee -a /etc/fstab
-
-  # Mount everything from fstab (applies immediately)
-  sudo mount -a
-
-  # Give jellyfin user read + traverse access via ACL (cleaner than chmod o+x)
-  if id jellyfin &>/dev/null; then
-    sudo setfacl -R -m u:jellyfin:rx "$SHOWS_DIR" "$FILMS_DIR"
-    sudo setfacl -m u:jellyfin:x "$VIDEOS_DIR" "$HOME"
-  else
-    echo "[jellyfin] Warning: jellyfin user not found, skipping ACL setup"
-  fi
-
-  echo "[jellyfin] Done"
-}
 
 stow_apply() {
   local prefix="[stow_apply]"

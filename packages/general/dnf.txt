@@ -32,7 +32,6 @@ gnome-keyring
 gnome-keyring-pam
 i2c-tools
 ibm-plex-sans-fonts
-jellyfin
 kernel-modules
 kernel-modules-extra
 kitty

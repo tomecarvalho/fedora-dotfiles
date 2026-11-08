@@ -15,10 +15,10 @@ ALL_STEPS=(
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PKGS_DIR="$SCRIPT_DIR/../packages/work"
+PKGS_DIR="$SCRIPT_DIR/../../packages/work"
 
-# shellcheck source=utils/packages.sh
-source "$SCRIPT_DIR/utils/packages.sh"
+# shellcheck source=../utils/packages.sh
+source "$SCRIPT_DIR/../utils/packages.sh"
 
 copr() {
   echo "[copr] Enable COPR repositories"
