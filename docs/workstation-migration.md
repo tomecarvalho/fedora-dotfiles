@@ -1,31 +1,52 @@
 # Migrate from Fedora Workstation
 
-Run these commands to move an existing installation in `fedora-workstation` to `fedora-dotfiles`:
+Run this command to move an existing installation in `fedora-workstation` to
+`fedora-dotfiles`:
 
 ```bash
-old="$HOME/fedora-workstation"
-new="$HOME/fedora-dotfiles"
+set -euo pipefail
 
-# Remove symlinks managed by the old checkout.
-while IFS= read -r package; do
-  target="$HOME"
-  [[ "$package" == .* ]] && target="$HOME/$package"
-  stow -D --dir "$old/stow" --target "$target" "$package"
-done < <(find "$old/stow" -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
+OLD="$HOME/fedora-workstation"
+NEW="$HOME/fedora-dotfiles"
+REPOSITORY_URL="https://github.com/tomecarvalho/fedora-dotfiles.git"
 
-# Rename the repo's dir and update the origin
-mv "$old" "$new"
-git -C "$new" remote set-url origin https://github.com/tomecarvalho/fedora-dotfiles.git
-git -C "$new" fetch origin
-git -C "$new" switch --force-create main origin/main
+if [[ -d "$OLD" && -e "$NEW" ]]; then
+  echo "Error: both $OLD and $NEW exist. Remove or rename one before continuing." >&2
+  exit 1
+fi
 
-# Re-create links from the new checkout.
-"$new/scripts/install/general.sh" -s stow_apply
-```
+if [[ -d "$OLD" ]]; then
+  if ! command -v stow >/dev/null 2>&1; then
+    echo "Error: GNU Stow is required to remove the OLD stow links." >&2
+    exit 1
+  fi
 
-If `~/.aliases` still points to the old checkout, recreate it:
+  while IFS= read -r package; do
+    target="$HOME"
+    [[ "$package" == .* ]] && target="$HOME/$package"
+    stow -D --dir "$OLD/stow" --target "$target" "$package"
+  done < <(find "$OLD/stow" -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
 
-```bash
+  mv "$OLD" "$NEW"
+elif [[ ! -d "$NEW" ]]; then
+  echo "Error: neither $OLD nor $NEW exists." >&2
+  exit 1
+fi
+
+git -C "$NEW" remote set-url origin "$REPOSITORY_URL"
+git -C "$NEW" fetch origin
+git -C "$NEW" reset --hard origin/main
+
+"$NEW/scripts/install/general.sh" -s stow_apply
+
 rm -f "$HOME/.aliases"
-"$new/scripts/install/general.sh" -s aliases
+"$NEW/scripts/install/general.sh" -s aliases
+
+echo "Migration complete: $NEW"
 ```
+
+The command removes old Stow links, renames `~/fedora-workstation` to
+`~/fedora-dotfiles` (if needed), updates the remote, and resets the checkout to
+`origin/main`.
+
+Local tracked changes are discarded.
