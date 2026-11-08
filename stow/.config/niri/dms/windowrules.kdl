@@ -1,0 +1,83 @@
+// DMS Window Rules - Managed by Dux Shell
+// Do not edit manually - changes may be overwritten
+
+// @id=wr_1790509412303337818 @name=Visual Studio Code
+window-rule {
+    match app-id="^com.microsoft.VSCode$"
+    open-maximized true
+}
+
+// @id=wr_1790509645404658097 @name=Cursor
+window-rule {
+    match app-id="^cursor$"
+    open-maximized true
+}
+
+// @id=wr_1790509700264831108 @name=Firefox
+window-rule {
+    match app-id="^org.mozilla.firefox$"
+    open-maximized true
+}
+
+// @id=wr_1790660960924116673 @name=Google Chrome
+window-rule {
+    match app-id="^google-chrome$"
+    open-maximized true
+}
+
+// @id=wr_1791186814257792909 @name=spotify
+window-rule {
+    match app-id="^spotify$"
+    open-maximized true
+}
+
+// @id=dms-floating-windows @name=DMS Floating Windows
+window-rule {
+    match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
+    open-floating true
+}
+
+// @id=wr_1792225438621497798 @name=kitty
+window-rule {
+    match app-id="^kitty$"
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
+// @id=wr_1792248041519876757 @name=Neovim
+window-rule {
+    match app-id="^nvim$"
+    open-maximized true
+}
+
+// @id=wr_1792776577244679674 @name=dev.zed.Zed
+window-rule {
+    match app-id="^dev.zed.Zed$" title="^Zed — Settings$"
+    open-floating true
+}
+
+// @id=wr_1792783545900151749 @name=dev.zed.Zed
+window-rule {
+    match app-id="^dev.zed.Zed$"
+    open-maximized true
+}
+
+// @id=wr_1793130674974448892 @name=md.obsidian.Obsidian
+window-rule {
+    match app-id="^md.obsidian.Obsidian$"
+    open-maximized true
+}
+
+// @id=wr_1793130759564667100 @name=md.obsidian.Obsidian
+window-rule {
+    match app-id="^md.obsidian.Obsidian$" title="^Settings - .+ - Obsidian .+$"
+    open-floating true
+}
+
+// @id=dms-window-opaque @name=DMS Window Opaque
+window-rule {
+    match app-id="^(dev\\.duxlabs\\.shell|com\\.danklinux\\.dms)$"
+    opacity 1.00
+}

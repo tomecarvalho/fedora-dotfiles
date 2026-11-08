@@ -1,3 +1,5 @@
+awscli2
 globalprotect-openconnect
 libxcrypt-compat.x86_64
 openvpn
+pv

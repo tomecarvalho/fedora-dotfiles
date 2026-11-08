@@ -2,32 +2,33 @@
 
 CURSOR_PATH="/usr/bin/cursor"
 
-FEDORA_WORKSTATION_PATH="$HOME/fedora-workstation"
-SCRIPTS_PATH="$FEDORA_WORKSTATION_PATH/scripts"
+DOTFILES_PATH="$HOME/fedora-dotfiles"
+SCRIPTS_PATH="$DOTFILES_PATH/scripts"
 BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 
-# Copy to clipboard on Wayland.
+# Copy text to the clipboard (Wayland).
 alias cb="wl-copy"
 
-# Update system packages, flatpaks, and snaps.
-alias update="sudo dnf up -y && flatpak update -y && sudo snap refresh"
+# Keep awake shorthand.
+alias ka="keep_awake"
 
-# Start a nested GNOME Shell instance for extension development
-alias gsdw="dbus-run-session gnome-shell --devkit --wayland"
+# Format staged git files with Prettier.
+alias prettier-staged="git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 npx prettier --write --ignore-unknown"
 
-# Update versioned dconf config.
-dconf_pull() {
-  "$SCRIPTS_PATH/dconf/pull.sh"
-}
+# Neovim shorthand
+alias v="nvim"
 
-# Commit and push changes to tracked dconf config.
-dconf_push() {
-  "$SCRIPTS_PATH/dconf/push.sh"
+# ssh kitten wrapper
+alias kssh="kitten ssh"
+
+# Update system packages, flatpaks, and snaps after creating a Btrfs snapshot.
+update() {
+  "$SCRIPTS_PATH/update/update.sh" "$@"
 }
 
 # Enables the cursor command to open files or directories through the terminal.
 cursor() {
-	"$CURSOR_PATH" --no-sandbox "$@"
+  "$CURSOR_PATH" --no-sandbox "$@"
 }
 
 # Start a systemd service.
@@ -42,15 +43,49 @@ stop() {
 
 # Backup a project directory, excluding common package manager caches and dependencies, recursively.
 backup_projects() {
-	"$BACKUP_SCRIPTS_PATH/backup-projects.sh" "$@"
+  "$BACKUP_SCRIPTS_PATH/backup-projects.sh" "$@"
 }
 
 # Backup select directories and files from the home directory.
 backup_home() {
-	"$BACKUP_SCRIPTS_PATH/backup-home.sh"
+  "$BACKUP_SCRIPTS_PATH/backup-home.sh"
 }
 
 # Sync home backup paths (and optional projects) to another local-network machine.
 sync_local() {
-	"$BACKUP_SCRIPTS_PATH/sync-local.sh" "$@"
+  "$BACKUP_SCRIPTS_PATH/sync-local.sh" "$@"
+}
+
+keep_awake() {
+  "$SCRIPTS_PATH/keep-awake/keep-awake.sh" "$@"
+}
+
+# Copy files to the clipboard (Wayland).
+fcp() {
+  "$SCRIPTS_PATH/files/copy.sh" "$@"
+}
+
+# Cut files to the Wayland clipboard (paste with fpst, which moves them).
+fct() {
+  "$SCRIPTS_PATH/files/cut.sh" "$@"
+}
+
+# Paste files from the clipboard into a directory (default: .) (Wayland).
+fpst() {
+  "$SCRIPTS_PATH/files/paste.sh" "$@"
+}
+
+# Obsidian: set up vaults
+vault_setup() {
+  "$SCRIPTS_PATH/obsidian/vault-setup.sh" "$@"
+}
+
+# Obsidian: push vault
+vault_push() {
+  "$SCRIPTS_PATH/obsidian/vault-push.sh" "$@"
+}
+
+# Automatically set the timezone based on the public IP address
+set_timezone() {
+  "$SCRIPTS_PATH/datetime/set-timezone.sh" "$@"
 }

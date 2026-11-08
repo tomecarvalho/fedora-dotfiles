@@ -1,0 +1,47 @@
+{
+  "calculator": {
+    "enabled": true,
+    "trigger": "",
+    "noTrigger": false
+  },
+  "emojiLauncher": {
+    "enabled": true
+  },
+  "ddcBrightness": {
+    "enabled": false
+  },
+  "webSearch": {
+    "enabled": true,
+    "searchEngines": [],
+    "disabledEngines": [
+      "duckduckgo",
+      "brave",
+      "bing",
+      "kagi",
+      "youtube",
+      "github",
+      "stackoverflow",
+      "reddit",
+      "wikipedia",
+      "amazon",
+      "ebay",
+      "maps",
+      "images",
+      "twitter",
+      "linkedin",
+      "imdb",
+      "archlinux",
+      "aur",
+      "nixpkgs",
+      "nixopts",
+      "npmjs",
+      "pypi",
+      "crates",
+      "mdn",
+      "translate"
+    ]
+  },
+  "niriWindows": {
+    "enabled": true
+  }
+}

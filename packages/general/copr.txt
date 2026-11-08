@@ -1,1 +1,4 @@
-kylegospo/webapp-manager
+dejan/lazygit
+duxlabs/dms
+duxlabs/dux-repo
+lihaohong/yazi

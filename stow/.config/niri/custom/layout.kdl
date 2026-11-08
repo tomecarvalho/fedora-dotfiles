@@ -1,0 +1,14 @@
+layout {
+    // Centre single column
+    always-center-single-column true
+
+    // Tabbed windows: make indicator visible
+    tab-indicator {
+        position "left"
+        place-within-column
+        length total-proportion=0.95
+        gap 4
+        gaps-between-tabs 4
+        corner-radius 12
+    }
+}
