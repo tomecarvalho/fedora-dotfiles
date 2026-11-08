@@ -17,6 +17,7 @@ set -euo pipefail
 
 # Default, ordered list of descriptive step names
 ALL_STEPS=(
+  set_hostname
   dnf_up
   rpm_fusion
   repos
@@ -48,13 +49,20 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ALIASES_DIR="$SCRIPT_DIR/../aliases"
 PKGS_DIR="$SCRIPT_DIR/../packages"
 GENERAL_PKGS_DIR="$PKGS_DIR/general"
-REMOVE_PKGS_DIR="$PKGS_DIR/remove"
 STOW_DIR="$SCRIPT_DIR/../stow"
 
 # shellcheck source=utils/packages.sh
 source "$SCRIPT_DIR/utils/packages.sh"
 # shellcheck source=utils/core.sh
 source "$SCRIPT_DIR/utils/core.sh"
+
+set_hostname() {
+  echo "[set_hostname] Set hostname based on devices.yaml"
+
+  if ! "$SCRIPT_DIR/hostname/set-hostname.sh"; then
+    echo "[set_hostname] Failed to set hostname" >&2
+  fi
+}
 
 dnf_up() {
   echo "[dnf_up] Update packages"
