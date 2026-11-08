@@ -82,6 +82,7 @@ PROJECT_EXCLUDE_PATTERNS=(
 usage() {
 	cat <<EOF
 Usage: $(basename "$0") [options] <host>
+       $(basename "$0") --receive
 
 Copy home backup paths (and optional project directories) to another machine
 over SSH. Local (sender) files win on conflicts.
@@ -90,6 +91,9 @@ Arguments:
   host                 SSH target, e.g. laptop or user@192.168.1.50
 
 Options:
+  -r, --receive        Run on the RECEIVING machine: ensure sshd is running,
+                       detect its LAN IP, and print the command to run on the
+                       sender. No host argument needed.
   -p, --project DIR    Project directory to sync (repeatable; must be under \$HOME)
   -n, --dry-run        Show what would be transferred without writing
   -d, --delete         Remove files on the remote that are gone locally
@@ -101,6 +105,7 @@ Auth:
   e.g. laptop.local
 
 Examples:
+  $(basename "$0") --receive
   $(basename "$0") laptop.local
   $(basename "$0") user@192.168.1.50 -p ~/projects/app
   $(basename "$0") --dry-run laptop.local -p ~/Code/foo -p ~/Code/bar
@@ -109,11 +114,16 @@ EOF
 
 DRY_RUN=0
 DELETE=0
+RECEIVE=0
 REMOTE=""
 PROJECT_DIRS=()
 
 while [[ $# -gt 0 ]]; do
 	case "$1" in
+	-r | --receive)
+		RECEIVE=1
+		shift
+		;;
 	-p | --project)
 		if [[ $# -lt 2 || "$2" == -* ]]; then
 			util_die "$ECHO_PREFIX" "$1 requires a directory argument."
@@ -145,6 +155,44 @@ while [[ $# -gt 0 ]]; do
 		;;
 	esac
 done
+
+# Receiver mode: make sure sshd is up and print the sender command.
+receive_mode() {
+	local lan_ip
+
+	util_require_commands "$ECHO_PREFIX" rsync ip systemctl
+
+	if systemctl is-active --quiet sshd; then
+		echo "$ECHO_PREFIX sshd is already running."
+	else
+		echo "$ECHO_PREFIX sshd is not running, starting it (sudo)..."
+		sudo systemctl enable --now sshd
+		if ! systemctl is-active --quiet sshd; then
+			util_die "$ECHO_PREFIX" "Failed to start sshd."
+		fi
+	fi
+
+	# Source IP of the default route = the LAN address other machines can reach.
+	lan_ip="$(ip -4 route get 1.1.1.1 2>/dev/null |
+		awk '{for (i = 1; i <= NF; i++) if ($i == "src") { print $(i + 1); exit }}' || true)"
+	if [[ -z "$lan_ip" ]]; then
+		lan_ip="$(hostname -I 2>/dev/null | awk '{print $1}' || true)"
+	fi
+	if [[ -z "$lan_ip" ]]; then
+		util_die "$ECHO_PREFIX" "Could not determine LAN IP address."
+	fi
+
+	echo "$ECHO_PREFIX Receiver ready: ${USER}@${lan_ip}"
+	echo "$ECHO_PREFIX Run this on the sender (add --dry-run first to preview):"
+	echo
+	echo "  $(basename "$0") ${USER}@${lan_ip}"
+	echo
+}
+
+if [[ "$RECEIVE" -eq 1 ]]; then
+	receive_mode
+	exit 0
+fi
 
 if [[ -z "$REMOTE" ]]; then
 	usage >&2
