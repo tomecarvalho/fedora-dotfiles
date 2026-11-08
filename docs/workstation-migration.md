@@ -1,5 +1,7 @@
 # Migrate from Fedora Workstation
 
+## Command
+
 Run this command to move an existing installation in `fedora-workstation` to
 `fedora-dotfiles`:
 
@@ -50,3 +52,23 @@ The command removes old Stow links, renames `~/fedora-workstation` to
 `origin/main`.
 
 Local tracked changes are discarded.
+
+## Validate Migration
+
+Run these checks:
+
+```bash
+test ! -e "$HOME/fedora-workstation" && echo "Old directory removed"
+test -d "$HOME/fedora-dotfiles" && echo "New directory exists"
+git -C "$HOME/fedora-dotfiles" remote get-url origin
+git -C "$HOME/fedora-dotfiles" branch --show-current
+git -C "$HOME/fedora-dotfiles" status --short
+git -C "$HOME/fedora-dotfiles" rev-parse HEAD origin/main
+readlink "$HOME/.aliases"
+```
+
+- Remote should be the `fedora-dotfiles` URL
+- Current branch should be `main`
+- `git status --short` should print nothing
+- Commit hashes should match
+- `.aliases` link should point inside `~/fedora-dotfiles`
