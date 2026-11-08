@@ -1,12 +1,6 @@
 # Fingerprint
 
-## Enable
-
-Search `?fingerprint`, open **Fingerprint** (_Managed by the primary PAM source_), and toggle the setting on.
-
-## Enrol
-
-Run:
+To enrol a fingerprint and enable it as an authentication method, run:
 
 ```sh
 fprintd-enroll
