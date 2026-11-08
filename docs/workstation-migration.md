@@ -38,18 +38,21 @@ fi
 git -C "$NEW" remote set-url origin "$REPOSITORY_URL"
 git -C "$NEW" fetch origin
 git -C "$NEW" reset --hard origin/main
+git -C "$NEW" switch -C main origin/main
+
+# Repair this before re-stowing if a previous run was interrupted.
+rm -f "$HOME/.aliases"
+ln -s "$NEW/aliases/.aliases" "$HOME/.aliases"
 
 "$NEW/scripts/install/general.sh" -s stow_apply
-
-rm -f "$HOME/.aliases"
-"$NEW/scripts/install/general.sh" -s aliases
 
 echo "Migration complete: $NEW"
 ```
 
 The command removes old Stow links, renames `~/fedora-workstation` to
 `~/fedora-dotfiles` (if needed), updates the remote, and resets the checkout to
-`origin/main`.
+`origin/main`. It also switches to `main`, repairs `.aliases`, and re-stows the
+configuration.
 
 Local tracked changes are discarded.
 
