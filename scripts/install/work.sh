@@ -104,8 +104,14 @@ chrome_install() {
   local prefix="[chrome_install]"
 
   echo "$prefix Enable Chrome repository and install it"
-  sudo dnf config-manager addrepo --overwrite --from-repofile=https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome.repo
-  sudo dnf config-manager setopt google-chrome.enabled=1
+  sudo tee /etc/yum.repos.d/google-chrome.repo >/dev/null <<'EOF'
+[google-chrome]
+name=google-chrome
+baseurl=https://dl.google.com/linux/chrome/rpm/stable/$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.google.com/linux/linux_signing_key.pub
+EOF
   sudo dnf in -y google-chrome-stable
 }
 
