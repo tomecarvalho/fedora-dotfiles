@@ -184,8 +184,7 @@ receive_mode() {
 
 	echo "$ECHO_PREFIX Receiver ready: ${USER}@${lan_ip}"
 	echo "$ECHO_PREFIX Run this on the sender (add --dry-run first to preview):"
-	echo
-	echo "  $(basename "$0") ${USER}@${lan_ip}"
+	echo "sync_local ${USER}@${lan_ip} -p ~/Projects/example"
 	echo
 }
 
