@@ -5,12 +5,12 @@
 
 set -eu
 
-dir=$(cd "$(dirname "$0")" && pwd)
-cfg="$dir/devices.yaml"
-dmi=/sys/devices/virtual/dmi/id
-suffix=-fedora
+DIR=$(cd "$(dirname "$0")" && pwd)
+DEVICES="$DIR/devices.yaml"
+DMI=/sys/devices/virtual/dmi/id
+SUFFIX=-fedora
 
-[ -r "$cfg" ] || { echo "missing $cfg" >&2; exit 1; }
+[ -r "$DEVICES" ] || { echo "missing $DEVICES" >&2; exit 1; }
 
 # Print the alias for model $1 (flat "model: alias" YAML, optional quotes).
 lookup() {
@@ -23,14 +23,14 @@ lookup() {
     gsub(/^[ \t]+|[ \t]+$/, "", k); gsub(/^[ \t]+|[ \t]+$/, "", v)
     gsub(/^["\047]|["\047]$/, "", k); gsub(/^["\047]|["\047]$/, "", v)
     if (k == m) { print v; exit }
-  }' "$cfg"
+  }' "$DEVICES"
 }
 
 # Match the model against devices.yaml and get the alias.
 alias_=""
 for f in product_version product_family product_name; do
-  [ -r "$dmi/$f" ] || continue
-  model=$(tr -d '\n' < "$dmi/$f")
+  [ -r "$DMI/$f" ] || continue
+  model=$(tr -d '\n' < "$DMI/$f")
   [ -n "$model" ] || continue
   alias_=$(lookup "$model")
   if [ -n "$alias_" ]; then
@@ -41,14 +41,14 @@ done
 
 # No alias: print the model info and exit with error.
 if [ -z "$alias_" ]; then
-  echo "No alias in $cfg for this device:" >&2
+  echo "No alias in $DEVICES for this device:" >&2
   for f in product_version product_family product_name; do
-    [ -r "$dmi/$f" ] && echo "  $f: $(cat "$dmi/$f")" >&2
+    [ -r "$DMI/$f" ] && echo "  $f: $(cat "$DMI/$f")" >&2
   done
   exit 1
 fi
 
-new="$alias_$suffix"
+new="$alias_$SUFFIX"
 [ "$(hostname)" = "$new" ] && { echo "Hostname is already '$new'"; exit 0; }
 
 if [ "$(id -u)" -eq 0 ]; then sudo=""; else sudo="sudo"; fi

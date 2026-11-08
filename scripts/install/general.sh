@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Installs and configures general software and services.
 
 OH_MY_ZSH_INSTALL_URL="https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
 NVM_INSTALL_URL="https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh"

@@ -7,6 +7,10 @@ Fedora Linux dotfiles and post-install scripts, to be applied following a minima
 
 Initial Fedora version: 45.
 
+## Warning
+
+Do not clone this repository anywhere but `~/fedora-dotfiles` - configurations and scripts may rely on this location.
+
 ## Documentation
 
 ### Installation

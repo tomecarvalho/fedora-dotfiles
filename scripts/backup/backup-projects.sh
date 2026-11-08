@@ -7,16 +7,16 @@ set -euo pipefail
 
 # Check if directory argument is provided
 if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 <directory>" >&2
-    exit 1
+  echo "Usage: $0 <directory>" >&2
+  exit 1
 fi
 
 PROJECT_DIR="$1"
 
 # Verify directory exists
 if [[ ! -d "$PROJECT_DIR" ]]; then
-    echo "Error: Directory '$PROJECT_DIR' does not exist" >&2
-    exit 1
+  echo "Error: Directory '$PROJECT_DIR' does not exist" >&2
+  exit 1
 fi
 
 # Create backups directory if it doesn't exist

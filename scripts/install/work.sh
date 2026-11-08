@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Installs work-related software
 
 set -euo pipefail

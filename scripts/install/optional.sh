@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Installs optional software and services.
 
 set -euo pipefail

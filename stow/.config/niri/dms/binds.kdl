@@ -137,11 +137,11 @@ binds {
     // Brightness
     XF86MonBrightnessUp allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "increment" "5" ""; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "decrement" "5" ""; }
-    Mod+Backslash repeat=false hotkey-overlay-title="Brightness: Cycle Presets" { spawn "sh" "-c" "$HOME/fedora-workstation/scripts/dms/brightness-cycle/cycle.sh"; }
-    Mod+Alt+Backslash repeat=false hotkey-overlay-title="Brightness: Low" { spawn "sh" "-c" "$HOME/fedora-workstation/scripts/dms/brightness-cycle/cycle.sh Low"; }
-    Mod+Ctrl+Backslash repeat=false hotkey-overlay-title="Brightness: Medium" { spawn "sh" "-c" "$HOME/fedora-workstation/scripts/dms/brightness-cycle/cycle.sh Medium"; }
-    Mod+Shift+Backslash repeat=false hotkey-overlay-title="Brightness: High" { spawn "sh" "-c" "$HOME/fedora-workstation/scripts/dms/brightness-cycle/cycle.sh High"; }
-    Mod+Shift+Ctrl+Backslash repeat=false hotkey-overlay-title="Brightness: Max" { spawn "sh" "-c" "$HOME/fedora-workstation/scripts/dms/brightness-cycle/cycle.sh Max"; }
+    Mod+Backslash repeat=false hotkey-overlay-title="Brightness: Cycle Presets" { spawn "sh" "-c" "$HOME/fedora-dotfiles/scripts/dms/brightness-cycle/cycle.sh"; }
+    Mod+Alt+Backslash repeat=false hotkey-overlay-title="Brightness: Low" { spawn "sh" "-c" "$HOME/fedora-dotfiles/scripts/dms/brightness-cycle/cycle.sh Low"; }
+    Mod+Ctrl+Backslash repeat=false hotkey-overlay-title="Brightness: Medium" { spawn "sh" "-c" "$HOME/fedora-dotfiles/scripts/dms/brightness-cycle/cycle.sh Medium"; }
+    Mod+Shift+Backslash repeat=false hotkey-overlay-title="Brightness: High" { spawn "sh" "-c" "$HOME/fedora-dotfiles/scripts/dms/brightness-cycle/cycle.sh High"; }
+    Mod+Shift+Ctrl+Backslash repeat=false hotkey-overlay-title="Brightness: Max" { spawn "sh" "-c" "$HOME/fedora-dotfiles/scripts/dms/brightness-cycle/cycle.sh Max"; }
 
     // Audio: Volume & Microphone
     XF86AudioRaiseVolume allow-when-locked=true { spawn "dms" "ipc" "call" "audio" "increment" "5"; }

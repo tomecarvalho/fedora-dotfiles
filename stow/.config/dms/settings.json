@@ -1,7 +1,7 @@
 {
   "currentThemeName": "custom",
   "currentThemeCategory": "custom",
-  "customThemeFile": "/home/tomec/fedora-workstation/themes/kanagawa/dank-material-shell/kanagawa.json",
+  "customThemeFile": "/home/tomec/fedora-dotfiles/themes/kanagawa/dank-material-shell/kanagawa.json",
   "registryThemeVariants": {
     "kanagawa": {
       "dark": {

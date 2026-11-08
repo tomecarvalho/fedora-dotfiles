@@ -2,8 +2,8 @@
 
 CURSOR_PATH="/usr/bin/cursor"
 
-FEDORA_WORKSTATION_PATH="$HOME/fedora-workstation"
-SCRIPTS_PATH="$FEDORA_WORKSTATION_PATH/scripts"
+DOTFILES_PATH="$HOME/fedora-dotfiles"
+SCRIPTS_PATH="$DOTFILES_PATH/scripts"
 BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 
 # Copy text to the clipboard (Wayland).
