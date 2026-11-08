@@ -32,36 +32,54 @@ BACKUP_FILE="${BACKUP_DIR}/${DIR_NAME}-${TIMESTAMP}.tar.gz"
 
 # Exclude patterns for common package managers and caches
 EXCLUDE_PATTERNS=(
-  # Common build directories
-  "build"
-  "dist"
-  "out"
-  "output"
-
-  # Node.js
-  "node_modules"
-  ".npm"
-  ".pnpm-store"
-  ".yarn/cache"
-  
-  # Python
-  "venv"
-  ".venv"
-  "__pycache__"
-  ".pytest_cache"
-  ".tox"
-  "*.egg-info"
-  ".mypy_cache"
-  
-  # Rust
-  "target"
-  
-  # Java/Gradle/Maven
-  ".gradle"
-  ".m2"
-  
-  # Go and PHP
-  "vendor"
+  	"__pycache__"
+	".gradle"
+	".m2"
+	".mypy_cache"
+	".npm"
+	".pnpm-store"
+	".pytest_cache"
+	".tox"
+	".venv"
+	".yarn/cache"
+	"*.egg-info"
+	"build"
+	"dist"
+	"node_modules"
+	"out"
+	"output"
+	"target"
+	"vendor"
+	"venv"
+  ".cache"
+  ".angular"
+  ".dart_tool"
+  ".direnv"
+  ".DS_Store"
+  ".eggs"
+  ".eslintcache"
+  ".expo"
+  ".idea/caches"
+  ".ipynb_checkpoints"
+  ".next"
+  ".nox"
+  ".nuxt"
+  ".nyc_output"
+  ".parcel-cache"
+  ".pytype"
+  ".ruff_cache"
+  ".serverless"
+  ".svelte-kit"
+  ".terraform"
+  ".turbo"
+  "*.log"
+  "*.pyc"
+  "bower_components"
+  "cmake-build-*"
+  "coverage"
+  "DerivedData"
+  "Pods"
+  "Thumbs.db"
 )
 
 # Build tar exclude arguments as an array
