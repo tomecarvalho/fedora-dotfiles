@@ -138,3 +138,4 @@ include "dms/windowrules.kdl"
 // Include custom files - don't forget to stow them.
 include "custom/layout.kdl"
 include "custom/recent-windows.kdl"
+include "custom/input.kdl"
