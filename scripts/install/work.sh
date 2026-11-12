@@ -11,6 +11,7 @@ ALL_STEPS=(
   docker_install
   cursor_install
   chrome_install
+  google_cloud_install
 )
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -113,6 +114,25 @@ gpgcheck=1
 gpgkey=https://dl.google.com/linux/linux_signing_key.pub
 EOF
   sudo dnf in -y google-chrome-stable
+}
+
+google_cloud_install() {
+  local prefix="[google_cloud_install]"
+
+  echo "$prefix Enable Google Cloud CLI repository and install it"
+
+  # https://docs.cloud.google.com/sdk/docs/install-sdk#linux
+  sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
+[google-cloud-cli]
+name=Google Cloud CLI
+baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el9-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOM
+
+  sudo dnf in -y google-cloud-cli
 }
 
 usage() {
