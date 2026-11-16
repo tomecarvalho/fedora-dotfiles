@@ -36,7 +36,7 @@ kernel-modules
 kernel-modules-extra
 kitty
 lazygit
-libgda 
+libgda
 libgda-sqlite
 libreoffice-calc
 libreoffice-impress
@@ -51,6 +51,8 @@ niri
 pipewire
 pipewire-alsa
 pipewire-pulseaudio
+plymouth-system-theme
+plymouth-theme-spinner
 python3-neovim
 python3-virtualenv
 qbittorrent

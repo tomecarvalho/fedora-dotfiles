@@ -470,6 +470,13 @@ EOF
 
 set_fonts_ibm_plex() { set_fonts ibm_plex; }
 
+plymouth_theme() {
+  local prefix="[plymouth_theme]"
+
+  echo "$prefix Set Plymouth theme"
+  sudo plymouth-set-default-theme -R bgrt
+}
+
 stow_apply() {
   local prefix="[stow_apply]"
   local -a stow_flags=(--restow --no-folding)
