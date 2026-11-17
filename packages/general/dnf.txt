@@ -64,6 +64,7 @@ ripgrep
 seahorse
 snapd
 snapper
+snapshot
 stow
 thunderbird
 tmux
