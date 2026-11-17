@@ -530,29 +530,51 @@ stow_apply() {
     return 0
   fi
 
+  # Same stow package, additional install roots 
+  # E.g. Claude Code needs ~/.claude/skills - it doesn't read from ~/.agents
+  declare -A STOW_ALTERNATE_TARGETS=(
+    [.agents]="$HOME/.claude"
+  )
+
   echo "$prefix Stowing ${#packages[@]} package(s) from $STOW_DIR into $HOME"
 
   local failed=0
 
+  stow_package() {
+    local package="$1"
+    local package_target="$2"
+    local -a stow_command=("$stow_bin")
+
+    if [[ "$package" == system ]] && ((!dry_run)); then
+      stow_command=(sudo "$stow_bin")
+    fi
+
+    echo "$prefix Stowing package: $package (target: $package_target)"
+    "${stow_command[@]}" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package"
+  }
+
   for package in "${packages[@]}"; do
     local package_target="$HOME"
-    local -a stow_command=("$stow_bin")
+    local -a targets=()
 
     if [[ "$package" == .* ]]; then
       package_target="$HOME/$package"
     elif [[ "$package" == system ]]; then
       package_target="/"
-      if ((!dry_run)); then
-        stow_command=(sudo "$stow_bin")
-      fi
     fi
 
-    echo "$prefix Stowing package: $package (target: $package_target)"
-    "${stow_command[@]}" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package" ||
-      {
-        echo "$prefix Failed to stow package: $package" >&2
-        failed=1
-      }
+    targets=("$package_target")
+    if [[ -n "${STOW_ALTERNATE_TARGETS[$package]+x}" ]]; then
+      targets+=("${STOW_ALTERNATE_TARGETS[$package]}")
+    fi
+
+    for package_target in "${targets[@]}"; do
+      stow_package "$package" "$package_target" ||
+        {
+          echo "$prefix Failed to stow package: $package" >&2
+          failed=1
+        }
+    done
   done
 
   return "$failed"
