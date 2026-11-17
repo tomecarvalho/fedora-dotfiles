@@ -6,17 +6,29 @@ DOTFILES_PATH="$HOME/fedora-dotfiles"
 SCRIPTS_PATH="$DOTFILES_PATH/scripts"
 BACKUP_SCRIPTS_PATH="$SCRIPTS_PATH/backup"
 
-# Copy text to the clipboard (Wayland).
-alias cb="wl-copy"
-
 # Keep awake shorthand.
 alias ka="keep_awake"
 
 # Format staged git files with Prettier.
 alias prettier-staged="git diff --cached --name-only --diff-filter=ACMR -z | xargs -0 npx prettier --write --ignore-unknown"
 
+# wl-copy shorthand (copy to clipboard)
+alias cb="wl-copy"
+
 # Neovim shorthand
 alias v="nvim"
+
+# Yazi shorthand
+alias y="yazi"
+
+# lazygit shorthand
+alias g="lazygit"
+
+# Clear shorthand
+alias cl="clear"
+
+# Claude Code shorthand
+alias cc="claude"
 
 # ssh kitten wrapper
 alias kssh="kitten ssh"
