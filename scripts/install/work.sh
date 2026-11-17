@@ -10,6 +10,7 @@ ALL_STEPS=(
   snap_install
   docker_install
   cursor_install
+  claude_install
   chrome_install
   google_cloud_install
 )
@@ -82,6 +83,23 @@ docker_install() {
 
   # Set up socket
   sudo systemctl enable --now docker.socket
+}
+
+claude_install() {
+  local prefix="[claude_install]"
+
+  echo "$prefix Add Claude Code repository"
+  sudo tee /etc/yum.repos.d/claude-code.repo <<'EOF'
+[claude-code]
+name=Claude Code
+baseurl=https://downloads.claude.ai/claude-code/rpm/stable
+enabled=1
+gpgcheck=1
+gpgkey=https://downloads.claude.ai/keys/claude-code.asc
+EOF
+
+  echo "$prefix Install Claude Code CLI"
+  sudo dnf in -y claude-code  
 }
 
 cursor_install() {
