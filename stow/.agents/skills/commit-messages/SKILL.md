@@ -1,5 +1,5 @@
 ---
-name: "commit-message"
+name: "commit-messages"
 description: "Generate commit messages based on Git changes. Use when changes are ready to commit, when asked to prepare or suggest a commit message, or when wrapping up a coding task. Supports multiple affected repositories."
 ---
 
