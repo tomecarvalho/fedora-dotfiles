@@ -25,6 +25,8 @@ When changes are ready to commit, provide a commit message for each affected rep
 
 Present each commit message in a fenced code block, ready to copy, with the repository name immediately before it.
 
+Don't include AI co-authorship lines in the commit message.
+
 ### Example
 
 Repo: `books-web-app`
