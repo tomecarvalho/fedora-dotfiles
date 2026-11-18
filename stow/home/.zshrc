@@ -10,20 +10,12 @@ export NVM_LAZY_LOAD=true
 plugins=(git zsh-nvm zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
-# GNOME Keyring environment variables
-[ -f ~/.gnome-keyring-env ] && . ~/.gnome-keyring-env
+# Shared environment, PATH and aliases (also used by .bashrc)
+[ -f ~/.shellrc ] && . ~/.shellrc
+typeset -U path
 
 # Zoxide
 eval "$(zoxide init zsh)"
-
-# User-specific environment
-export PNPM_HOME="$HOME/.local/share/pnpm"
-typeset -U path
-path=("$HOME/.local/bin" "$HOME/bin" "$PNPM_HOME" $path)
-
-# Aliases
-[ -f ~/.aliases ] && . ~/.aliases
-[ -f ~/.private.aliases ] && . ~/.private.aliases
 
 # ZSH Syntax Highlighting
 ZSH_SYNTAX_HIGHLIGHTING="/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

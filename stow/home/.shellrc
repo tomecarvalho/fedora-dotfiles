@@ -1,0 +1,21 @@
+# shellcheck shell=sh
+# shellcheck disable=SC1090,SC1091
+# Shared by ~/.bashrc and ~/.zshrc. Keep it POSIX sh compatible.
+
+# PATH (prepend each entry once, so re-sourcing doesn't duplicate)
+export PNPM_HOME="$HOME/.local/share/pnpm"
+for dir in "$PNPM_HOME" "$HOME/bin" "$HOME/.local/bin"; do
+    case ":$PATH:" in
+        *":$dir:"*) ;;
+        *) PATH="$dir:$PATH" ;;
+    esac
+done
+unset dir
+export PATH
+
+# GNOME Keyring environment variables
+[ -f ~/.gnome-keyring-env ] && . ~/.gnome-keyring-env
+
+# Aliases
+[ -f ~/.aliases ] && . ~/.aliases
+[ -f ~/.private.aliases ] && . ~/.private.aliases
