@@ -42,12 +42,18 @@ Convert tool-specific agent instructions in the current repo (or the path given 
 
 End with a concise report: what moved where, what was merged or dropped, files removed, conflicts the user needs to resolve, and tool-specific config left untouched.
 
+If possible, append a commit message using the `commit-messages` skill.
+
 ## Rules
 
 - Prefer `git mv` over copy and delete.
 - Keep `AGENTS.md` short: it loads every session.
 - Do not invent rules or rewrite their meaning; only restructure and rephrase conditions.
 - Repo-level files only, unless the user asks about user-level config (`~/.claude`, `~/.cursor`).
+
+## Detecting issues along the way
+
+If you detect an issue/inconsistency along the way - for example, a link whose text does not match the path - you may fix it without confirmation. In that case, include a "Resolved Issues" section at the bottom of the output. 
 
 ## Notes
 
