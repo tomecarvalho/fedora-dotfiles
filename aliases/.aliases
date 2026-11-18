@@ -24,11 +24,12 @@ alias y="yazi"
 # lazygit shorthand
 alias g="lazygit"
 
-# Clear shorthand
-alias cl="clear"
-
-# Claude Code shorthand
-alias cc="claude"
+# Claude Code shorthands
+alias cl="claude"
+alias cf="claude --model fable"
+alias co="claude --model opus"
+alias cs="claude --model sonnet"
+alias ch="claude --model haiku"
 
 # ssh kitten wrapper
 alias kssh="kitten ssh"
