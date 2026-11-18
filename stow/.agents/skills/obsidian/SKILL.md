@@ -49,7 +49,13 @@ _meta/                        # Vault docs (guides)
 ### Daily notes (`daily/YYYY-MM-DD.md`)
 
 - Create from `templates/daily.md`; use today's date.
-- Add items under the right section, one bullet per item, with project tag and ticket link. Nest details as sub-bullets.
+- Add items under the right section, one bullet per item, with project tag and ticket link.
+- Keep entries terse: a one-line summary, plus at most one or two sub-bullets listing the key changes in a few words each. No testing notes, rationale, or optional follow-ups. Example:
+  ```
+  - #ff API: Sped up deploys by optimising Docker build
+  	- Slim multi-stage Dockerfile, trimmed .dockerignore, removed unused `gcp-build` script
+  ```
+- The user will add more detail themselves if needed.
 - Only work done or in progress today belongs here; queued or waiting items go in `backlog-and-blocked.md`.
 - Carrying over: the next day's note starts with yesterday's unfinished items under `## In Progress`.
 - Don't edit past days unless asked.
