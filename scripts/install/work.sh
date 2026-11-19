@@ -11,6 +11,7 @@ ALL_STEPS=(
   docker_install
   cursor_install
   claude_install
+  claude_plugins
   chrome_install
   google_cloud_install
 )
@@ -100,6 +101,16 @@ EOF
 
   echo "$prefix Install Claude Code CLI"
   sudo dnf in -y claude-code  
+}
+
+claude_plugins() {
+  local prefix="[claude_plugins]"
+
+  echo "$prefix Install Claude Code plugins"
+
+  # 1. Firebase (https://firebase.google.com/docs/ai-assistance/mcp-server#claude)
+  claude plugin marketplace add firebase/firebase-tools
+  claude plugin install firebase@firebase
 }
 
 cursor_install() {
