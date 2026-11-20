@@ -536,6 +536,12 @@ stow_apply() {
     [.agents]="$HOME/.claude"
   )
 
+  # Files stow can't rename: symlink [source under $HOME] -> [link under $HOME]
+  # Claude Code reads ~/.claude/CLAUDE.md, not AGENTS.md.
+  declare -A EXTRA_LINKS=(
+    [".claude/CLAUDE.md"]=".agents/AGENTS.md"
+  )
+
   echo "$prefix Stowing ${#packages[@]} package(s) from $STOW_DIR into $HOME"
 
   local failed=0
@@ -544,13 +550,19 @@ stow_apply() {
     local package="$1"
     local package_target="$2"
     local -a stow_command=("$stow_bin")
+    local -a extra_flags=()
+
+    # AGENTS.md is exposed as CLAUDE.md in the alternate target (see EXTRA_LINKS)
+    if [[ "$package" == .agents && "$package_target" == "$HOME/.claude" ]]; then
+      extra_flags+=(--ignore='^AGENTS\.md$')
+    fi
 
     if [[ "$package" == system ]] && ((!dry_run)); then
       stow_command=(sudo "$stow_bin")
     fi
 
     echo "$prefix Stowing package: $package (target: $package_target)"
-    "${stow_command[@]}" "${stow_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package"
+    "${stow_command[@]}" "${stow_flags[@]}" "${extra_flags[@]}" --dir "$STOW_DIR" --target "$package_target" "$package"
   }
 
   for package in "${packages[@]}"; do
@@ -575,6 +587,24 @@ stow_apply() {
           failed=1
         }
     done
+  done
+
+  local link_path link_target
+  for link_path in "${!EXTRA_LINKS[@]}"; do
+    link_target="$HOME/${EXTRA_LINKS[$link_path]}"
+    link_path="$HOME/$link_path"
+
+    if ((dry_run)); then
+      echo "$prefix Would link $link_path -> $link_target"
+      continue
+    fi
+
+    mkdir -p "$(dirname "$link_path")"
+    ln -sfn "$link_target" "$link_path" || {
+      echo "$prefix Failed to link $link_path" >&2
+      failed=1
+    }
+    echo "$prefix Linked $link_path -> $link_target"
   done
 
   return "$failed"
