@@ -14,28 +14,26 @@ trap 'rm -rf "$BACKUP_SUBDIR"' EXIT
 
 # Directories to backup
 DIRS_TO_BACKUP=(
-	"$HOME/.ssh"
-	"$HOME/.oh-my-zsh"
-	"$HOME/.cursor"
-	"$HOME/.config/Cursor"
-	"$HOME/.config/Code"
-	"$HOME/.vscode"
-	"$HOME/.config/zed"
-	"$HOME/.local/share/zed"
-	"$HOME/.thunderbird"
-	"$HOME/.mozilla"
-	"$HOME/.vpn"
+  "$HOME/.ssh"
+  "$HOME/.oh-my-zsh"
+  "$HOME/.cursor"
+  "$HOME/.config/Cursor"
+  "$HOME/.config/Code"
+  "$HOME/.vscode"
+  "$HOME/.thunderbird"
+  "$HOME/.mozilla"
+  "$HOME/.vpn"
 )
 
 # Files to backup
 FILES_TO_BACKUP=(
-	"$HOME/.zsh_history"
-	"$HOME/.zshrc"
-	"$HOME/.bashrc"
-	"$HOME/.bash_history"
-	"$HOME/.profile"
-	"$HOME/.bash_profile"
-	"$HOME/.private.aliases"
+  "$HOME/.zsh_history"
+  "$HOME/.zshrc"
+  "$HOME/.bashrc"
+  "$HOME/.bash_history"
+  "$HOME/.profile"
+  "$HOME/.bash_profile"
+  "$HOME/.private.aliases"
 )
 
 # Create backup directory (subdir for this run)
@@ -43,22 +41,22 @@ echo "Starting backup to: $BACKUP_SUBDIR"
 
 # Backup directories
 for dir in "${DIRS_TO_BACKUP[@]}"; do
-	if [[ -d "$dir" ]]; then
-		echo "Backing up directory: $dir"
-		cp -r "$dir" "$BACKUP_SUBDIR/"
-	else
-		echo "Warning: Directory not found: $dir"
-	fi
+  if [[ -d "$dir" ]]; then
+    echo "Backing up directory: $dir"
+    cp -r "$dir" "$BACKUP_SUBDIR/"
+  else
+    echo "Warning: Directory not found: $dir"
+  fi
 done
 
 # Backup files
 for file in "${FILES_TO_BACKUP[@]}"; do
-	if [[ -f "$file" ]]; then
-		echo "Backing up file: $file"
-		cp "$file" "$BACKUP_SUBDIR/"
-	else
-		echo "Warning: File not found: $file"
-	fi
+  if [[ -f "$file" ]]; then
+    echo "Backing up file: $file"
+    cp "$file" "$BACKUP_SUBDIR/"
+  else
+    echo "Warning: File not found: $file"
+  fi
 done
 
 # Create tar archive with timestamp in filename

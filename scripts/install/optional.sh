@@ -6,7 +6,6 @@ set -euo pipefail
 ALL_STEPS=(
   jellyfin
   vscode_install
-  zed_install
 )
 
 VIDEOS_DIR="$HOME/Videos"
@@ -61,18 +60,6 @@ vscode_install() {
   sudo dnf in -y code
 }
 
-zed_install() {
-  local prefix="[zed_install]"
-
-  if command -v zed &>/dev/null; then
-    echo "$prefix Zed is already installed"
-    return
-  fi
-
-  echo "$prefix Install Zed through its installation script"
-  curl -fsSL https://zed.dev/install.sh | sh
-}
-
 usage() {
   cat <<EOF
 Usage: $0 [-s "step1,step2" | -s "name1,name2"] [-l]
@@ -86,12 +73,12 @@ Options:
 
 Available steps (in order):
 $(
-  i=1
-  for name in "${ALL_STEPS[@]}"; do
-    printf "  %2d) %s\n" "$i" "$name"
-    ((i++))
-  done
-)
+    i=1
+    for name in "${ALL_STEPS[@]}"; do
+      printf "  %2d) %s\n" "$i" "$name"
+      ((i++))
+    done
+  )
 EOF
 }
 
@@ -99,29 +86,29 @@ STEPS_ARG=""
 LIST_ONLY=false
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -s|--steps)
-      if [[ -n "${2-}" ]]; then
-        STEPS_ARG="$2"
-        shift 2
-        continue
-      fi
-      echo "Error: --steps requires an argument" >&2
-      usage
-      exit 2
-      ;;
-    -l|--list)
-      LIST_ONLY=true
-      shift
-      ;;
-    -h|--help)
-      usage
-      exit 0
-      ;;
-    *)
-      echo "Unknown argument: $1" >&2
-      usage
-      exit 2
-      ;;
+  -s | --steps)
+    if [[ -n "${2-}" ]]; then
+      STEPS_ARG="$2"
+      shift 2
+      continue
+    fi
+    echo "Error: --steps requires an argument" >&2
+    usage
+    exit 2
+    ;;
+  -l | --list)
+    LIST_ONLY=true
+    shift
+    ;;
+  -h | --help)
+    usage
+    exit 0
+    ;;
+  *)
+    echo "Unknown argument: $1" >&2
+    usage
+    exit 2
+    ;;
   esac
 done
 
