@@ -18,6 +18,9 @@ alias cb="wl-copy"
 # Neovim shorthand
 alias v="nvim"
 
+# Sudo edit shorthand
+alias se="sudoedit"
+
 # Yazi shorthand
 alias y="yazi"
 
