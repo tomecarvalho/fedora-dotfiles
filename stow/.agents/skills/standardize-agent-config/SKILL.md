@@ -36,11 +36,21 @@ Convert tool-specific agent instructions in the current repo (or the path given 
 8. **`CLAUDE.md` files** (root and subdirectories): merge the content into the `AGENTS.md` in the same directory (create it if missing), then remove the `CLAUDE.md` with `git rm`. This removal is part of the migration and needs no extra confirmation, but list every removed file in the report. Exception: if the user explicitly asked to keep `CLAUDE.md`, replace its body with `@AGENTS.md` plus any genuinely Claude-only section. Leave `CLAUDE.local.md` (personal, usually gitignored) untouched and flag it in the report, since a leftover Claude-specific file may affect which instruction file Claude Code loads.
 9. **Other tool files** (`GEMINI.md`, `.clinerules`, copilot instructions, `.windsurfrules`, `.cursorrules`) -> merge into `AGENTS.md` or `.agents/rules/` per steps 3-4.
 10. **Leave alone and list in the report:** settings, hooks, permissions, `.mcp.json` and other MCP config. These are tool-specific and not portable.
-11. **Verify.** Every file in `.agents/rules/` is referenced from `AGENTS.md`; every path in `AGENTS.md` exists; the symlink resolves; `AGENTS.md` is short; no secrets were copied; no `CLAUDE.md` remains (unless explicitly requested); `git status` is clean of unintended changes.
+11. **Triage extracted rules for human relevance.** Applies to every file that landed in `.agents/rules/` (or was merged into `AGENTS.md`) from a tool-specific location in steps 3-6 and 9. Go through each one and judge whether it contains:
+    - **Agent-specific rules**: instructions that only matter to an AI agent (tool usage, "always run X before finishing", output/response style, how to use skills, avoiding hallucinated paths). Keep in `.agents/rules/`.
+    - **Human-relevant content**: architecture, conventions, setup/build/test workflows, coding standards, domain knowledge, style guides, or anything a new developer would also need to read. These belong in the project's docs directory, where humans look.
+    - **Mixed**: note which parts are which.
+
+    Do not move anything in this step. Suggest moving human-relevant files (or parts) to the docs directory as a **follow-up**, and briefly state the reason per file. Leave the final decision to the user.
+
+    Find the docs directory by looking at the repo root for a directory such as `docs/`, `doc/`, `documentation/`, `wiki/`, or `.github/docs/`, or by checking where existing `README.md` links point. If several candidates exist, name them and ask which is canonical. If none exists, say so and suggest a name (default `docs/`). A suggested move implies keeping an `AGENTS.md` index entry that points to the new docs path, so the agent still finds it.
+12. **Verify.** Every file in `.agents/rules/` is referenced from `AGENTS.md`; every path in `AGENTS.md` exists; the symlink resolves; `AGENTS.md` is short; no secrets were copied; no `CLAUDE.md` remains (unless explicitly requested); `git status` is clean of unintended changes.
 
 ## Output
 
 End with a concise report: what moved where, what was merged or dropped, files removed, conflicts the user needs to resolve, and tool-specific config left untouched.
+
+Include a "Suggested follow-ups: move to docs" section listing each rule file (or part) judged human-relevant in step 11, the proposed destination in the docs directory, and the reason. Omit the section if there are none.
 
 If possible, append a commit message using the `commit-messages` skill.
 
