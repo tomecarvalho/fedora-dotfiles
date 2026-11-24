@@ -14,26 +14,25 @@ trap 'rm -rf "$BACKUP_SUBDIR"' EXIT
 
 # Directories to backup
 DIRS_TO_BACKUP=(
-  "$HOME/.ssh"
-  "$HOME/.oh-my-zsh"
-  "$HOME/.cursor"
-  "$HOME/.config/Cursor"
   "$HOME/.config/Code"
-  "$HOME/.vscode"
-  "$HOME/.thunderbird"
+  "$HOME/.config/Cursor"
+  "$HOME/.cursor"
   "$HOME/.mozilla"
+  "$HOME/.oh-my-zsh"
+  "$HOME/.ssh"
+  "$HOME/.thunderbird"
   "$HOME/.vpn"
+  "$HOME/.vscode"
 )
 
 # Files to backup
 FILES_TO_BACKUP=(
-  "$HOME/.zsh_history"
-  "$HOME/.zshrc"
-  "$HOME/.bashrc"
   "$HOME/.bash_history"
-  "$HOME/.profile"
   "$HOME/.bash_profile"
+  "$HOME/.claude.json"
   "$HOME/.private.aliases"
+  "$HOME/.profile"
+  "$HOME/.zsh_history"
 )
 
 # Create backup directory (subdir for this run)

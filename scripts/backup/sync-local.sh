@@ -13,18 +13,19 @@ source "$SCRIPT_DIR/../utils/core.sh"
 ECHO_PREFIX="[sync-local]"
 
 DIRS_TO_SYNC=(
+  "$HOME/.config/Code"
   "$HOME/.config/Cursor"
   "$HOME/.cursor"
-  "$HOME/.config/Code"
-  "$HOME/.vscode"
   "$HOME/.mozilla"
   "$HOME/.oh-my-zsh"
   "$HOME/.ssh"
   "$HOME/.thunderbird"
   "$HOME/.vpn"
+  "$HOME/.vscode"
 )
 
 FILES_TO_SYNC=(
+  "$HOME/.claude.json"
   "$HOME/.private.aliases"
   "$HOME/.zsh_history"
 )
