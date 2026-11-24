@@ -68,7 +68,6 @@ Act on a single occurrence.
 - No bold for emphasis. Bold only for UI labels or terms being defined, if at all.
 - No bold-label lists ("**Performance:** Performance has been improved"). Convert to plain bullets or one sentence.
 - No emoji or arrow decoration in headings or bullets.
-- Sentence-case headings. Headings for navigation only.
 - No horizontal rules between sections.
 - Avoid nested bullets deeper than one level.
 - No tables for content with a single column of information.
