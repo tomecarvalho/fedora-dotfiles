@@ -59,7 +59,7 @@ Act on a single occurrence.
 
 - Don't force triads. Keep three items only if there are three distinct things.
 - Vary repeated sentence openings by merging sentences.
-- No em dashes, en dashes, or spaced `--` in prose. Use a period, comma, colon, or parentheses.
+- No em dashes, en dashes, or spaced `--` in prose; use a period, comma, colon, or parentheses.
 - Remove stacked qualifiers ("could potentially", "might arguably"). Keep a hedge only if the uncertainty is real.
 - Prefer active voice when the actor matters.
 
@@ -68,9 +68,11 @@ Act on a single occurrence.
 - No bold for emphasis. Bold only for UI labels or terms being defined, if at all.
 - No bold-label lists ("**Performance:** Performance has been improved"). Convert to plain bullets or one sentence.
 - No emoji or arrow decoration in headings or bullets.
-- No horizontal rules between sections.
+- Prefer plain ASCII characters (e.g. "->" rather than "→", or "..." instead of "…"); keep accents where a language needs them.
 - Avoid nested bullets deeper than one level.
 - No tables for content with a single column of information.
+
+Exception: use horizontal rules between sections that aren't directly related, to improve readability.
 
 ### 7. Chat residue and disclaimers
 
