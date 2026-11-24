@@ -71,7 +71,7 @@ Each `projects/<project>/` can have `issues/` and `tasks/`. These hold notes tha
 
 ### Backlog (`backlog-and-blocked.md`)
 
-Two numbered lists, `## Backlog` and `## Blocked`:
+Three numbered lists, in this order: `## Backlog`, `## Blocked` and `## Pending Production Deployment`:
 
 ```
 1. #abcd [ABCD-123 Task title here](https://mobinteg.atlassian.net/browse/ABCD-123) (extra context)
@@ -79,4 +79,5 @@ Two numbered lists, `## Backlog` and `## Blocked`:
 
 - Order is priority. If asked to add something to the backlog without a specified priority, append it to the end.
 - Blocked items say what blocks them, in parentheses.
+- Pending Production Deployment holds tasks already done and deployed to Dev and/or QA that haven't been greenlit for production. Say what the deployment is waiting on, in parentheses.
 - When work starts, move the item to the daily note's `## In Progress` and remove it from the backlog.
