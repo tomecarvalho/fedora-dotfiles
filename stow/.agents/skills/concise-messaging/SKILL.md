@@ -10,3 +10,4 @@ When writing messages for humans:
 - No pleasantries (greetings, sign-offs, small talk, apologies, closing offers).
 - Machine-like delivery: state things directly.
 - Formatting: short declarative sentences or flat bullet points; lead with the outcome or status first.
+- Language: English, unless another one is specified.
