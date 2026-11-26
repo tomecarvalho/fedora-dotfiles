@@ -1,6 +1,6 @@
 ---
 name: "obsidian"
-description: "Read and write the user's Obsidian vaults (personal, mobinteg). Use when asked to read, create or update notes, daily notes, issue/task notes, the backlog, or anything about the user's notes or vault."
+description: "Read and write the user's Obsidian vaults (personal, mobinteg). Use when asked to read, create or update notes, daily notes, issue/task notes, the backlog, or anything about the user's notes or vault. Also use when saving outputs of work on a ticket (plans, PR texts, reports) that the user will keep."
 ---
 
 # Obsidian
@@ -31,7 +31,7 @@ Before writing, read `_meta/daily-notes-guide.md` (routine and conventions) and 
 backlog-and-blocked.md        # Task backlog + blocked list
 daily/YYYY-MM-DD.md           # Daily notes
 projects/<project>/issues/    # Notes on a reported issue
-projects/<project>/tasks/     # Notes/plans for a task
+projects/<project>/tasks/     # Notes/plans for a task; ticket outputs in tasks/<ID>/
 templates/daily.md            # Daily note template
 templates/issue.md            # Issue note template
 _meta/                        # Vault docs (guides)
@@ -66,6 +66,7 @@ Each `projects/<project>/` can have `issues/` and `tasks/`. These hold notes tha
 
 - **Issue** (`issues/YYYY-MM-DD-<slug>/index.md`): an investigation of something reported. Create from `templates/issue.md` (sections: Report, Notes, Follow-up). Extra material goes in sibling files in the same dir (e.g. `logs.md`).
 - **Task** (`tasks/YYYY-MM-DD-<slug>.md`): a plan or notes for work. A single file by default. If it needs attachments or several files, use a dir `tasks/YYYY-MM-DD-<slug>/` with `notes.md` and `docs/`.
+- **Ticket outputs** (`tasks/<ID>/`): outputs produced while working on a ticket (task or epic), e.g. plans, PR titles/bodies and links, reports, analysis, screenshots, go in a dir named after the exact ticket ID (`tasks/UPV-15/`), not in temp or scratch dirs. For an epic, use the epic's ID and keep its tasks' outputs inside it. Add `notes.md` as the index (ticket links, status, links to the other files); put extra material in sibling files and dirs (e.g. `plan.md`, `prs/`, `docs/`, `screenshots/`). Don't write temp paths into these files.
 - Slugs are lowercase kebab-case. The date is when the note was created.
 - If the backlog item has a plan note, link it from the backlog line: `Plan: [[<note-name>]]`.
 
