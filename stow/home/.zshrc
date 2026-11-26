@@ -1,3 +1,10 @@
+#!/usr/bin/env zsh
+
+SCRIPTS_PATH="$HOME/fedora-dotfiles/scripts"
+
+# Yazi shell wrapper
+source "$SCRIPTS_PATH/yazi/wrapper.sh"
+
 # Oh My ZSH
 export ZSH="$HOME/.oh-my-zsh"
 

@@ -21,9 +21,6 @@ alias v="nvim"
 # Sudo edit shorthand
 alias se="sudoedit"
 
-# Yazi shorthand
-alias y="yazi"
-
 # lazygit shorthand
 alias g="lazygit"
 

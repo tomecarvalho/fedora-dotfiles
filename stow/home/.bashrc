@@ -1,5 +1,11 @@
+#!/usr/bin/env bash
 # .bashrc
 # shellcheck disable=SC1090,SC1091
+
+SCRIPTS_PATH="$HOME/fedora-dotfiles/scripts"
+
+# Yazi shell wrapper
+source "$SCRIPTS_PATH/yazi/wrapper.sh"
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
