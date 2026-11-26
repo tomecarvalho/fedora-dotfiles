@@ -21,15 +21,6 @@ die() {
   exit 1
 }
 
-notify() {
-  if command -v notify-send >/dev/null 2>&1; then
-    notify-send -a "Launch groups" "$1" "${2:-}"
-  elif command -v dms >/dev/null 2>&1; then
-    dms ipc call toast info "$1${2:+ ($2)}" >/dev/null 2>&1 || true
-  fi
-}
-
-command -v niri >/dev/null 2>&1 || die "niri is not available"
 command -v jq >/dev/null 2>&1 || die "jq is not available"
 command -v yq >/dev/null 2>&1 || die "yq is not available (install the yq package)"
 [ -r "$config" ] || die "missing config: $config"
@@ -100,17 +91,17 @@ while IFS=$'\t' read -r app_regex output workspace command reuse; do
   }
 
   case "$reuse" in
-    true)
-      window_id=$(window_for_app "$app_regex")
-      ;;
-    false)
-      window_id=
-      ;;
-    *)
-      printf 'launch-group: reuse must be true or false for app %s\n' "$app_regex" >&2
-      failed=1
-      continue
-      ;;
+  true)
+    window_id=$(window_for_app "$app_regex")
+    ;;
+  false)
+    window_id=
+    ;;
+  *)
+    printf 'launch-group: reuse must be true or false for app %s\n' "$app_regex" >&2
+    failed=1
+    continue
+    ;;
   esac
 
   if [ -z "$window_id" ]; then
@@ -137,9 +128,8 @@ while IFS=$'\t' read -r app_regex output workspace command reuse; do
 
   move_window "$window_id" "$output" "$workspace"
   launched=$((launched + 1))
-done <<< "$matches"
+done <<<"$matches"
 
 [ "$failed" -eq 0 ] ||
   die "group '$group' completed with errors"
 
-notify "Launch group: $group" "$launched applications on $profile"
