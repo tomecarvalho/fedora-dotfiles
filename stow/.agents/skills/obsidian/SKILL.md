@@ -52,7 +52,7 @@ _meta/                        # Vault docs (guides)
 - Add items under the right section, one bullet per item, with project tag and ticket link.
 - Keep entries terse: a one-line summary, plus at most one or two sub-bullets listing the key changes in a few words each. No testing notes, rationale, or optional follow-ups. Example:
   ```
-  - #ff API: Sped up deploys by optimising Docker build
+  - #abc API: Sped up deploys by optimising Docker build
   	- Slim multi-stage Dockerfile, trimmed .dockerignore, removed unused `gcp-build` script
   ```
 - The user will add more detail themselves if needed.
@@ -60,15 +60,34 @@ _meta/                        # Vault docs (guides)
 - Carrying over: the next day's note starts with yesterday's unfinished items under `## In Progress`.
 - Don't edit past days unless asked.
 
+---
+
 ### Projects
 
 Each `projects/<project>/` can have `issues/` and `tasks/`. These hold notes that don't fit in the project management tool (e.g. Jira).
 
-- **Issue** (`issues/YYYY-MM-DD-<slug>/index.md`): an investigation of something reported. Create from `templates/issue.md` (sections: Report, Notes, Follow-up). Extra material goes in sibling files in the same dir (e.g. `logs.md`).
-- **Task** (`tasks/YYYY-MM-DD-<slug>.md`): a plan or notes for work. A single file by default. If it needs attachments or several files, use a dir `tasks/YYYY-MM-DD-<slug>/` with `notes.md` and `docs/`.
-- **Ticket outputs** (`tasks/<ID>/`): outputs produced while working on a ticket (task or epic), e.g. plans, PR titles/bodies and links, reports, analysis, screenshots, go in a dir named after the exact ticket ID (`tasks/UPV-15/`), not in temp or scratch dirs. For an epic, use the epic's ID and keep its tasks' outputs inside it. Add `notes.md` as the index (ticket links, status, links to the other files); put extra material in sibling files and dirs (e.g. `plan.md`, `prs/`, `docs/`, `screenshots/`). Don't write temp paths into these files.
+#### Issue
+
+(`issues/YYYY-MM-DD-<slug>/index.md`): an investigation of something reported. Create from `templates/issue.md` (sections: Report, Notes, Follow-up). Extra material goes in sibling files in the same dir (e.g. `logs.md`).
+
+#### Task
+
+(`tasks/YYYY-MM-DD-<slug>.md`): a plan or notes for work. A single file by default. If it needs attachments or several files, use a dir `tasks/YYYY-MM-DD-<slug>/` with `notes.md` and `docs/`.
+
+#### Ticket outputs
+
+(`tasks/<ID>/`): outputs produced while working on a ticket (task or epic), e.g. plans, PR titles/bodies and links, reports, analysis, screenshots, go in a dir named after the exact ticket ID (`tasks/ABC-15/`), not in temp or scratch dirs. For an epic, use the epic's ID and keep its tasks' outputs inside it. Add `notes.md` as the index (ticket links, status, links to the other files); put extra material in sibling files and dirs (e.g. `plan.md`, `prs/`, `docs/`, `screenshots/`). Don't write temp paths into these files.
+
+If multiple items were worked on simultaneously and you're asked to group their files together, include all IDs in the dir, e.g. `ABC-15-16-17-18`.
+
+---
+
+### Notes
+
 - Slugs are lowercase kebab-case. The date is when the note was created.
 - If the backlog item has a plan note, link it from the backlog line: `Plan: [[<note-name>]]`.
+
+---
 
 ### Backlog (`backlog-and-blocked.md`)
 
